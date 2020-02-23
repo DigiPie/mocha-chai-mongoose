@@ -20,7 +20,7 @@ To deploy this project locally for development purposes, follow the steps below.
 ## Downloads
 To begin, first install and set up the following.
 
-1. [Install MongoDB locally](https://digipie.github.io/digidocs/mongodb/local-setup/), take note of your `mongoURI`. Alternatively, you can use [mLab](https://mlab.com/) instead.
+1. [Install MongoDB locally](https://digipie.github.io/digidocs/full-stack/mongodb/local-setup/), take note of your `mongoURI`. Alternatively, you can use [mLab](https://mlab.com/) instead.
 2. [Install NodeJS](https://nodejs.org/en/).
 3. Clone this repository (e.g. enter `git clone https://github.com/DigiPie/mocha-chai-mongoose.git` in your command-line terminal).
 
