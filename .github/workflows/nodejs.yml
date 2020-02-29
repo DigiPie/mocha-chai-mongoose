@@ -1,0 +1,32 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        work-dir: [server]
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: echo "Testing NodeJS app at '${{ matrix.work-dir }}' directory."
+    - run: npm install
+      working-directory: ${{ matrix.work-dir }}
+    - run: mv config/prod.js config/dev.js
+      working-directory: ${{ matrix.work-dir }}
+    - run: npm test
+      working-directory: ${{ matrix.work-dir }}
+      env:
+        CI: true
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        COOKIE_KEY: ${{ secrets.COOKIE_KEY }}
+        
