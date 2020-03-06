@@ -49,7 +49,14 @@ Finally, you can execute the Mocha test suites under the _test/_ directory.
 4. To exit the test, press `CTRL + C`.
 
 # Automated testing via Github action
-Coming soon.
+
+Check out the Github Action workflow for this project: [nodejs.yml](https://github.com/DigiPie/mocha-chai-mongoose/blob/master/.github/workflows/nodejs.yml). This workflow performs automated testing via `npm test` each time you do a `git push` to your Github repo.
+
+It uses:
+
+- [actions/checkout](https://github.com/actions/checkout): to checkout this repo.
+- [actions/setup-node](https://github.com/actions/setup-node): to setup specified node versions.
+- [DigiPie/mongo-action](https://github.com/DigiPie/mongo-action): to instantiate a mongoDB server in a Docker container for testing against.
 
 # Deployment to Herokuapp
 Coming soon.
