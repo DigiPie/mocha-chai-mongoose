@@ -1,5 +1,7 @@
 process.env.NODE_ENV = "test";
 
+const _ = require("lodash");
+
 const mongoose = require("mongoose");
 require("../models/Product");
 const Product = mongoose.model("products");
@@ -108,7 +110,7 @@ describe("products", () => {
         .post("/api/products")
         .send({
           name: p_name,
-          price: p_price
+          price: p_price,
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -149,7 +151,7 @@ describe("products", () => {
         .request(app)
         .post("/api/products")
         .send({
-          price: p_price
+          price: p_price,
         })
         .end((err, res) => {
           chai.assert.equal(res.body.name, "ValidationError");
@@ -171,7 +173,7 @@ describe("products", () => {
         .request(app)
         .post("/api/products")
         .send({
-          name: p_name
+          name: p_name,
         })
         .end((err, res) => {
           chai.assert.equal(res.body.name, "ValidationError");
@@ -185,12 +187,12 @@ describe("products", () => {
   // Integration tests //
 
   /**
-   * Integration test suite for the GET /api/products and POST /apip/products route.
+   * Integration test suite for the GET /api/products and POST /api/products route.
    */
   describe("GET /api/products & POST /api/products", () => {
     /**
      * Tests the POST /api/products and GET /api/products route.
-     * Expected to return an empty array since no products have been added yet.
+     * Expected to return an array of 1 product added by POST.
      * Expected to return a 200 OK status code.
      */
     it("Successfully GET an array of 1 product added by POST.", (done) => {
@@ -231,6 +233,83 @@ describe("products", () => {
             chai.assert.equal(price, p_price);
             chai.assert.equal(quantity, p_quantity);
             chai.assert.equal(isListed, p_isListed);
+            done();
+          })
+          .timeout(500);
+      });
+    });
+
+    /**
+     * Tests the POST /api/products and GET /api/products route.
+     * Expected to return an array of 2 products added by POST.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully GET an array of 2 products added by POST.", (done) => {
+      Product.deleteMany({}, (err) => {
+        // Add 1st product
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 1;
+        const p_isListed = false;
+
+        chai
+          .request(app)
+          .post("/api/products")
+          .send({
+            name: p_name,
+            price: p_price,
+            quantity: p_quantity,
+            isListed: p_isListed,
+          })
+          .end((err, res) => {
+            res.should.have.status(200);
+            const { name, price, quantity, isListed } = res.body;
+            chai.assert.equal(name, p_name);
+            chai.assert.equal(price, p_price);
+            chai.assert.equal(quantity, p_quantity);
+            chai.assert.equal(isListed, p_isListed);
+          })
+          .timeout(500);
+
+        // Add 2nd product
+        const p_name_2 = "Banana";
+        const p_price_2 = 15;
+
+        chai
+          .request(app)
+          .post("/api/products")
+          .send({
+            name: p_name_2,
+            price: p_price_2,
+          })
+          .end((err, res) => {
+            res.should.have.status(200);
+            const { name, price } = res.body;
+            chai.assert.equal(name, p_name_2);
+            chai.assert.equal(price, p_price_2);
+          })
+          .timeout(500);
+
+        // GET the 2 added products
+        chai
+          .request(app)
+          .get("/api/products")
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("array");
+            res.body.length.should.be.eql(2);
+
+            const product_1 = _.find(res.body, ["name", p_name]);
+            const { name, price, quantity, isListed } = product_1;
+            chai.assert.equal(name, p_name);
+            chai.assert.equal(price, p_price);
+            chai.assert.equal(quantity, p_quantity);
+            chai.assert.equal(isListed, p_isListed);
+
+            const product_2 = _.find(res.body, ["name", p_name_2]);
+            const { name: name_2, price: price_2 } = product_2;
+            chai.assert.equal(name_2, p_name_2);
+            chai.assert.equal(price_2, p_price_2);
             done();
           })
           .timeout(500);
