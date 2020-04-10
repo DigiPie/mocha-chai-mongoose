@@ -67,11 +67,11 @@ describe("products", () => {
      * Expected to return the added Product retrieved from the Product collection.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully return added Product.", (done) => {
+    it("Successfully add a Product with all parameters specified.", (done) => {
       const p_name = "Apple";
       const p_price = 1.0;
       const p_quantity = 1;
-      const p_isListed = false;
+      const p_isListed = true;
 
       chai
         .request(app)
@@ -95,14 +95,84 @@ describe("products", () => {
     });
 
     /**
+     * Tests the POST /api/products route with only required Product parameters specified.
+     * Expected to return the added Product retrieved from the Product collection.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully add a Product with only required parameters specified.", (done) => {
+      const p_name = "Apple";
+      const p_price = 1.0;
+
+      chai
+        .request(app)
+        .post("/api/products")
+        .send({
+          name: p_name,
+          price: p_price
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          const { name, price } = res.body;
+          chai.assert.equal(name, p_name);
+          chai.assert.equal(price, p_price);
+          done();
+        })
+        .timeout(500);
+    });
+
+    /**
      * Tests the POST /api/products route with all Product parameters missing.
      * Expected to return a ValidationError.
      * Expected to return a 422 Unprocessable Entity status code.
      */
-    it("Fail to add Product and successfully return ValidationError.", (done) => {
+    it("Fail to add a Product because all parameters are missing.", (done) => {
       chai
         .request(app)
         .post("/api/products")
+        .end((err, res) => {
+          chai.assert.equal(res.body.name, "ValidationError");
+          res.should.have.status(422);
+          done();
+        })
+        .timeout(500);
+    });
+
+    /**
+     * Tests the POST /api/products route with required paramter 'name' missing.
+     * Expected to return a ValidationError.
+     * Expected to return a 422 Unprocessable Entity status code.
+     */
+    it("Fail to add a Product because 'name' parameter is missing.", (done) => {
+      const p_price = 1.0;
+
+      chai
+        .request(app)
+        .post("/api/products")
+        .send({
+          price: p_price
+        })
+        .end((err, res) => {
+          chai.assert.equal(res.body.name, "ValidationError");
+          res.should.have.status(422);
+          done();
+        })
+        .timeout(500);
+    });
+
+    /**
+     * Tests the POST /api/products route with required paramter 'price' missing.
+     * Expected to return a ValidationError.
+     * Expected to return a 422 Unprocessable Entity status code.
+     */
+    it("Fail to add a Product because 'price' parameter is missing.", (done) => {
+      const p_name = "Apple";
+
+      chai
+        .request(app)
+        .post("/api/products")
+        .send({
+          name: p_name
+        })
         .end((err, res) => {
           chai.assert.equal(res.body.name, "ValidationError");
           res.should.have.status(422);
