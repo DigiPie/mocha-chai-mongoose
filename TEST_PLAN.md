@@ -14,12 +14,12 @@ Test cases:
 ### Test cases
 |   | Type        | Suite                                          | Test case                                                           |
 |--:|-------------|------------------------------------------------|---------------------------------------------------------------------|
-| 1 | Unit        | GET /api/products                              | Successfully GET an empty array of 0 Products.                      |
-| 2 | Unit        | GET /api/products                              | Successfully GET an empty array of 1 Product.                       |
-| 3 | Unit        | POST /api/products                             | Successfully add a Product with all parameters specified.           |
-| 4 | Unit        | POST /api/products                             | Successfully add a Product with only required parameters specified. |
-| 5 | Unit        | POST /api/products                             | Fail to add a Product because all parameters are missing.           |
-| 6 | Unit        | POST /api/products                             | Fail to add a Product because 'name' parameter is missing.          |
-| 7 | Unit        | POST /api/products                             | Fail to add a Product because 'price' parameter is missing.         |
-| 8 | Integration | GET /api/products and POST /api/products | Successfully GET an array of 1 Product added by POST.               |
-| 9 | Integration | GET /api/products and POST /api/products | Successfully GET an array of 2 Products added by POST.              |
+| 1 | U        | GET /api/products                              | Successfully GET an empty array of 0 Products.                      |
+| 2 | U        | GET /api/products                              | Successfully GET an empty array of 1 Product.                       |
+| 3 | U        | POST /api/products                             | Successfully add a Product with all parameters specified.           |
+| 4 | U        | POST /api/products                             | Successfully add a Product with only required parameters specified. |
+| 5 | U        | POST /api/products                             | Fail to add a Product because all parameters are missing.           |
+| 6 | U        | POST /api/products                             | Fail to add a Product because 'name' parameter is missing.          |
+| 7 | U        | POST /api/products                             | Fail to add a Product because 'price' parameter is missing.         |
+| 8 | I | GET /api/products and POST /api/products | Successfully GET an array of 1 Product added by POST.               |
+| 9 | I | GET /api/products and POST /api/products | Successfully GET an array of 2 Products added by POST.              |
