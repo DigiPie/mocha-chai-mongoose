@@ -1,6 +1,6 @@
 {
   "name": "mochai",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An up-to-date 2020 example of how you can use Mocha and Chai to perform API testing for a Node-ExpressJS-Mongoose app.",
   "main": "index.js",
   "keywords": [
