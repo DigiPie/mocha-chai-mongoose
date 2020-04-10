@@ -44,7 +44,7 @@ describe("products", () => {
      * Expected to return an empty array since no products have been added yet.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully GET an empty array of 0 products.", (done) => {
+    it("Successfully GET an empty array of 0 Products.", (done) => {
       Product.deleteMany({}, (err) => {
         chai
           .request(app)
@@ -56,6 +56,41 @@ describe("products", () => {
             done();
           })
           .timeout(500);
+      });
+    });
+
+    /**
+     * Tests the GET /api/products route.
+     * Expected to return an array of 1 Product added via the
+     * Mongoose model directly.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully GET an empty array of 1 Product.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Apple";
+        const p_price = 1.0;
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          dateCreated: Date.now(),
+        });
+
+        product.save({}, (err) => {
+          chai
+            .request(app)
+            .get("/api/products")
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a("array");
+              res.body.length.should.be.eql(1);
+              const { name, price } = res.body[0];
+              chai.assert.equal(name, p_name);
+              chai.assert.equal(price, p_price);
+              done();
+            })
+            .timeout(500);
+        });
       });
     });
   });
@@ -189,13 +224,13 @@ describe("products", () => {
   /**
    * Integration test suite for the GET /api/products and POST /api/products route.
    */
-  describe("GET /api/products & POST /api/products", () => {
+  describe("GET /api/products and POST /api/products", () => {
     /**
      * Tests the POST /api/products and GET /api/products route.
-     * Expected to return an array of 1 product added by POST.
+     * Expected to return an array of 1 Product added by POST.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully GET an array of 1 product added by POST.", (done) => {
+    it("Successfully GET an array of 1 Product added by POST.", (done) => {
       Product.deleteMany({}, (err) => {
         const p_name = "Apple";
         const p_price = 1.0;
@@ -244,9 +279,9 @@ describe("products", () => {
      * Expected to return an array of 2 products added by POST.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully GET an array of 2 products added by POST.", (done) => {
+    it("Successfully GET an array of 2 Products added by POST.", (done) => {
       Product.deleteMany({}, (err) => {
-        // Add 1st product
+        // Add 1st Product
         const p_name = "Apple";
         const p_price = 1.0;
         const p_quantity = 1;
@@ -271,7 +306,7 @@ describe("products", () => {
           })
           .timeout(500);
 
-        // Add 2nd product
+        // Add 2nd Product
         const p_name_2 = "Banana";
         const p_price_2 = 15;
 
