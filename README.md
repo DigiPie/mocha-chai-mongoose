@@ -15,7 +15,7 @@ Furthermore, the code is set up such that it will automatically switch to Produc
 ### Test suite
 In this project, a single test suite: _test/productRoutes.test.js_ is used to test a single Express route: _routes/productRoutes.js_ which handles API calls pertaining to a single Mongoose model: _models/Product.js_.
 
-**Work-in-progress:** Currently, there is only a single test case testing the 'GET /api/products' route. A full-fledge implementation and associated testing of `POST`, `GET`, `PATCH` and `DELETE` routes will be added by end June 2020.
+**Work-in-progress:** Currently, there are only 3 unit test cases testing the 'GET /api/products' and 'POST /api/products' routes. A full-fledge implementation and associated testing of `GET`, `PATCH` and `DELETE` routes will be added by end June 2020.
 
 ## Local testing guide
 To deploy this project locally for development purposes, follow the steps below.
