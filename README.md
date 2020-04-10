@@ -13,11 +13,13 @@ You will be able to test your code **locally** and also automatically when you p
 Furthermore, the code is set up such that it will automatically switch to Production Keys rather than Development Keys on deployment.
 
 ### Test suite
-In this project, a single test suite: _test/productRoutes.test.js_ is used to test a single Express route: _routes/productRoutes.js_ which handles API calls pertaining to a single Mongoose model: _models/Product.js_.
+In this project, a single test file: _test/productRoutes.test.js_ is used to test a single Express route: _routes/productRoutes.js_ which handles API calls pertaining to a single Mongoose model: _models/Product.js_.
 
-**Work-in-progress:** Currently, there are only 6 unit test cases and 1 integration test case testing the `GET /api/products` and `POST /api/products` routes.
+View the [Test Plan](TEST_PLAN.md) for more information.
 
-A full-fledge implementation and associated testing of `GET`, `PATCH` and `DELETE` routes will be added by end June 2020.
+**Work-in-progress:** Currently, only the `GET /api/products` and `POST /api/products` routes and their associated unit and integration tests have been added.
+
+A full-fledge implementation and associated testing of `PUT` and `DELETE` routes will be added by end May 2020.
 
 ## Local testing guide
 To deploy this project locally for development purposes, follow the steps below.
