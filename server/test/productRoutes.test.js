@@ -41,7 +41,7 @@ describe("products", () => {
   describe("GET /api/products", () => {
     /**
      * Tests the GET /api/products route.
-     * Expected to return an empty array since no products have been added yet.
+     * Expected to return an empty array since no Products have been added yet.
      * Expected to return a 200 OK status code.
      */
     it("Successfully GET an empty array of 0 Products.", (done) => {
@@ -61,8 +61,7 @@ describe("products", () => {
 
     /**
      * Tests the GET /api/products route.
-     * Expected to return an array of 1 Product added via the
-     * Mongoose model directly.
+     * Expected to return an array of 1 Product added via the Mongoose model directly.
      * Expected to return a 200 OK status code.
      */
     it("Successfully GET an empty array of 1 Product.", (done) => {
@@ -104,7 +103,7 @@ describe("products", () => {
      * Expected to return the added Product retrieved from the Product collection.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully add a Product with all parameters specified.", (done) => {
+    it("Successfully POST 1 Product with all parameters specified.", (done) => {
       const p_name = "Apple";
       const p_price = 1.0;
       const p_quantity = 1;
@@ -136,7 +135,7 @@ describe("products", () => {
      * Expected to return the added Product retrieved from the Product collection.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully add a Product with only required parameters specified.", (done) => {
+    it("Successfully POST 1 Product with only required parameters specified.", (done) => {
       const p_name = "Apple";
       const p_price = 1.0;
 
@@ -162,7 +161,7 @@ describe("products", () => {
      * Expected to return a ValidationError.
      * Expected to return a 422 Unprocessable Entity status code.
      */
-    it("Fail to add a Product because all parameters are missing.", (done) => {
+    it("Fail to POST 1 Product because all parameters are missing.", (done) => {
       chai
         .request(app)
         .post("/api/products")
@@ -175,11 +174,11 @@ describe("products", () => {
     });
 
     /**
-     * Tests the POST /api/products route with required paramter 'name' missing.
+     * Tests the POST /api/products route with required parameter 'name' missing.
      * Expected to return a ValidationError.
      * Expected to return a 422 Unprocessable Entity status code.
      */
-    it("Fail to add a Product because 'name' parameter is missing.", (done) => {
+    it("Fail to POST 1 Product because 'name' parameter is missing.", (done) => {
       const p_price = 1.0;
 
       chai
@@ -197,11 +196,11 @@ describe("products", () => {
     });
 
     /**
-     * Tests the POST /api/products route with required paramter 'price' missing.
+     * Tests the POST /api/products route with required parameter 'price' missing.
      * Expected to return a ValidationError.
      * Expected to return a 422 Unprocessable Entity status code.
      */
-    it("Fail to add a Product because 'price' parameter is missing.", (done) => {
+    it("Fail to POST 1 Product because 'price' parameter is missing.", (done) => {
       const p_name = "Apple";
 
       chai
@@ -216,6 +215,95 @@ describe("products", () => {
           done();
         })
         .timeout(500);
+    });
+  });
+
+  /**
+   * Unit test suite for the DELETE /api/products route.
+   */
+  describe("DELETE /api/products", () => {
+    /**
+     * Tests the DELETE /api/products route.
+     * Expected to delete 1 Product added via the Mongoose model directly.
+     * Expected to return a 200 OK status code.
+     */
+    /*it("Successfully DELETE 1 Product.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Apple";
+        const p_price = 1.0;
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          dateCreated: Date.now(),
+        });
+
+        product.save({}, (err) => {
+          // Retrieve the saved document's Mongoose ID
+          const { _id } = product;
+          chai.assert.isNotNull(_id);
+
+          Product.countDocuments({}, (err, count) => {
+            chai.assert.equal(count, 1);
+          });
+
+          chai
+            .request(app)
+            .delete("/api/products")
+            .send({
+              _id,
+            })
+            .end((err, res) => {
+              res.should.have.status(200);
+              const { _id: returnedId } = res.body;
+              chai.assert.equal(returnedId, _id);
+
+              Product.countDocuments({}, (err, count) => {
+                chai.assert.equal(count, 0);
+              });
+
+              done();
+            })
+            .timeout(500);
+        });
+      });
+    });*/
+
+    /**
+     * Tests the DELETE /api/products route with required parameter '_id' missing.
+     * Expected to return a ValidationError.
+     * Expected to return a 400 Bad Request status code.
+     */
+    it("Fail to DELETE 1 Product because '_id' is missing.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Apple";
+        const p_price = 1.0;
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          dateCreated: Date.now(),
+        });
+
+        product.save({}, (err) => {
+          // Retrieve the saved document's Mongoose ID
+          const { _id } = product;
+          chai.assert.isNotNull(_id);
+
+          Product.countDocuments({}, (err, count) => {
+            chai.assert.equal(count, 1);
+          });
+
+          chai
+            .request(app)
+            .delete("/api/products")
+            .end((err, res) => {
+              res.should.have.status(500);
+              done();
+            })
+            .timeout(500);
+        });
+      });
     });
   });
 
