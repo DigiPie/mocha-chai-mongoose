@@ -5,7 +5,11 @@ const keys = require("./config/keys");
 
 require("./models/Product");
 // Remember to config mongoURI in 'keys.js'
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+});
 
 const app = express();
 
