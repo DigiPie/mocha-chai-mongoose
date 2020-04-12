@@ -17,9 +17,19 @@ In this project, a single test file: _test/productRoutes.test.js_ is used to tes
 
 View the [Test Plan](TEST_PLAN.md) for more information.
 
-**Work-in-progress:** Currently, only the `GET /api/products` and `POST /api/products` routes and their associated unit and integration tests have been added.
+**Work-in-progress:** Currently, the `GET /api/products`, `POST /api/products` and `DELETE /api/products` routes have been implemented. Unit test cases for all 3 routes have been written, and integration test cases for `GET` and `POST` have been completed.
 
-A full-fledge implementation and associated testing of `PUT` and `DELETE` routes will be added by end May 2020.
+**What's left:**
+
+To be completed by end April 2020:
+
+- Integration test cases between `POST` and `DELETE` (v0.0.7)
+- Integration test cases between `GET`, `POST` and `DELETE` (v0.0.7)
+- Implementation of `PUT /api/products` route (v0.0.8)
+- Unit test cases for `PUT` (v0.0.8)
+- Integration test cases between `POST` and `PUT` (v0.0.9)
+- Integration test cases between `GET`, `POST` and `PUT` (v0.0.9)
+- Milestone v0.1.0: Additional code clean-up and comments (v0.1.0)
 
 ## Local testing guide
 To deploy this project locally for development purposes, follow the steps below.
