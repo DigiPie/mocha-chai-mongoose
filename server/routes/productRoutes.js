@@ -41,13 +41,16 @@ module.exports = (app) => {
     const { _id } = req.body;
 
     try {
-      const query = await Product.findByIdAndRemove(_id);
-
+      const query = await ProductService.deleteOne(_id);
       res.send(query);
     } catch (err) {
       // If validation error, return 400 Bad Request
+      if (_.isEqual(err.name, "ValidationError")) {
+        return res.status(400).send(err);
+      }
 
-      if (_.isEqual(err.name, "ReferenceError")) {
+      // If _id is malformed, return 400 Bad Request
+      if (_.isEqual(err.name, "CastError")) {
         return res.status(400).send(err);
       }
 
