@@ -1,48 +1,67 @@
-const mongoose = require("mongoose");
-const Product = mongoose.model("products");
+const _ = require("lodash");
+const ProductService = require("../services/ProductService");
 
 module.exports = (app) => {
   // Get all products
-  app.get("/api/products", async (req, res) => {
-    const products = await Product.find();
-    res.send(products);
+  app.get("/api/products", async (req, res, next) => {
+    try {
+      const products = await ProductService.getAll();
+      res.send(products);
+    } catch (err) {
+      // Pass on unexpected error
+      return next(err);
+    }
   });
 
   // Add a product
-  app.post("/api/products", async (req, res) => {
+  app.post("/api/products", async (req, res, next) => {
     const { name, price, quantity, isListed } = req.body;
 
-    const product = new Product({
-      name,
-      price,
-      quantity,
-      isListed,
-      dateCreated: Date.now(),
-    });
-
     try {
-      await product.save();
+      const product = await ProductService.addOne(
+        name,
+        price,
+        quantity,
+        isListed
+      );
       res.send(product);
     } catch (err) {
-      res.status(422).send(err);
+      // If validation error, return 400 Bad Request
+      if (_.isEqual(err.name, "ValidationError")) {
+        return res.status(400).send(err);
+      }
+
+      // Pass on unexpected error
+      return next(err);
     }
   });
 
   // Delete a product
-  app.delete("/api/products", async (req, res) => {
+  app.delete("/api/products", async (req, res, next) => {
     const { _id } = req.body;
 
     try {
       const query = await Product.findByIdAndRemove(_id);
 
-      // If query fails, a null query is returned
-      if (!query) {
-        throw new Error();
-      }
-
       res.send(query);
     } catch (err) {
+      // If validation error, return 400 Bad Request
+
+      if (_.isEqual(err.name, "ReferenceError")) {
+        return res.status(400).send(err);
+      }
+
+      // Pass on unexpected error
+      return next(err);
+    }
+  });
+
+  // Error handling
+  app.use(function (err, req, res, next) {
+    if (req.xhr) {
       res.status(500).send(err);
+    } else {
+      next(err);
     }
   });
 };

@@ -159,15 +159,15 @@ describe("products", () => {
     /**
      * Tests the POST /api/products route with all Product parameters missing.
      * Expected to return a ValidationError.
-     * Expected to return a 422 Unprocessable Entity status code.
+     * Expected to return a 400 Bad Request status code.
      */
     it("Fail to POST 1 Product because all parameters are missing.", (done) => {
       chai
         .request(app)
         .post("/api/products")
         .end((err, res) => {
+          res.should.have.status(400);
           chai.assert.equal(res.body.name, "ValidationError");
-          res.should.have.status(422);
           done();
         })
         .timeout(500);
@@ -176,7 +176,7 @@ describe("products", () => {
     /**
      * Tests the POST /api/products route with required parameter 'name' missing.
      * Expected to return a ValidationError.
-     * Expected to return a 422 Unprocessable Entity status code.
+     * Expected to return a 400 Bad Request status code.
      */
     it("Fail to POST 1 Product because 'name' parameter is missing.", (done) => {
       const p_price = 1.0;
@@ -188,8 +188,8 @@ describe("products", () => {
           price: p_price,
         })
         .end((err, res) => {
+          res.should.have.status(400);
           chai.assert.equal(res.body.name, "ValidationError");
-          res.should.have.status(422);
           done();
         })
         .timeout(500);
@@ -198,7 +198,7 @@ describe("products", () => {
     /**
      * Tests the POST /api/products route with required parameter 'price' missing.
      * Expected to return a ValidationError.
-     * Expected to return a 422 Unprocessable Entity status code.
+     * Expected to return a 400 Bad Request status code.
      */
     it("Fail to POST 1 Product because 'price' parameter is missing.", (done) => {
       const p_name = "Apple";
@@ -210,8 +210,8 @@ describe("products", () => {
           name: p_name,
         })
         .end((err, res) => {
+          res.should.have.status(400);
           chai.assert.equal(res.body.name, "ValidationError");
-          res.should.have.status(422);
           done();
         })
         .timeout(500);
@@ -223,55 +223,7 @@ describe("products", () => {
    */
   describe("DELETE /api/products", () => {
     /**
-     * Tests the DELETE /api/products route.
-     * Expected to delete 1 Product added via the Mongoose model directly.
-     * Expected to return a 200 OK status code.
-     */
-    /*it("Successfully DELETE 1 Product.", (done) => {
-      Product.deleteMany({}, (err) => {
-        const p_name = "Apple";
-        const p_price = 1.0;
-
-        const product = new Product({
-          name: p_name,
-          price: p_price,
-          dateCreated: Date.now(),
-        });
-
-        product.save({}, (err) => {
-          // Retrieve the saved document's Mongoose ID
-          const { _id } = product;
-          chai.assert.isNotNull(_id);
-
-          Product.countDocuments({}, (err, count) => {
-            chai.assert.equal(count, 1);
-          });
-
-          chai
-            .request(app)
-            .delete("/api/products")
-            .send({
-              _id,
-            })
-            .end((err, res) => {
-              res.should.have.status(200);
-              const { _id: returnedId } = res.body;
-              chai.assert.equal(returnedId, _id);
-
-              Product.countDocuments({}, (err, count) => {
-                chai.assert.equal(count, 0);
-              });
-
-              done();
-            })
-            .timeout(500);
-        });
-      });
-    });*/
-
-    /**
      * Tests the DELETE /api/products route with required parameter '_id' missing.
-     * Expected to return a ValidationError.
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to DELETE 1 Product because '_id' is missing.", (done) => {
@@ -298,7 +250,7 @@ describe("products", () => {
             .request(app)
             .delete("/api/products")
             .end((err, res) => {
-              res.should.have.status(500);
+              res.should.have.status(400);
               done();
             })
             .timeout(500);
