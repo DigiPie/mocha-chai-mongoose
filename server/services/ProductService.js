@@ -3,12 +3,12 @@ const Product = mongoose.model("products");
 
 class ProductService {
   // Returns a Promise which finds all documents in the Collection
-  static getAll() {
+  static findAll() {
     return Product.find();
   }
 
-  // Returns a Promise which adds one document to the Collection
-  static addOne(name, price, quantity, isListed) {
+  // Returns a Promise which saves one document to the Collection
+  static saveOne(name, price, quantity, isListed) {
     const product = new Product({
       name,
       price,
@@ -20,8 +20,8 @@ class ProductService {
     return product.save();
   }
 
-  // Returns a Promise which deletes one document to the Collection
-  static deleteOne(_id) {
+  // Returns a Promise which deletes one document in the Collection
+  static findByIdAndRemove(_id) {
     if (!_id) {
       let err = new Error("Missing parameter: '_id'.");
       err.name = "ValidationError";

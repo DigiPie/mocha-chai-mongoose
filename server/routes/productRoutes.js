@@ -2,10 +2,10 @@ const _ = require("lodash");
 const ProductService = require("../services/ProductService");
 
 module.exports = (app) => {
-  // Get all products
+  // Gets all products
   app.get("/api/products", async (req, res, next) => {
     try {
-      const products = await ProductService.getAll();
+      const products = await ProductService.findAll();
       res.send(products);
     } catch (err) {
       // Pass on unexpected error
@@ -13,12 +13,12 @@ module.exports = (app) => {
     }
   });
 
-  // Add a product
+  // Saves a product
   app.post("/api/products", async (req, res, next) => {
     const { name, price, quantity, isListed } = req.body;
 
     try {
-      const product = await ProductService.addOne(
+      const product = await ProductService.saveOne(
         name,
         price,
         quantity,
@@ -36,12 +36,12 @@ module.exports = (app) => {
     }
   });
 
-  // Delete a product
+  // Deletes a product
   app.delete("/api/products", async (req, res, next) => {
     const { _id } = req.body;
 
     try {
-      const query = await ProductService.deleteOne(_id);
+      const query = await ProductService.findByIdAndRemove(_id);
       res.send(query);
     } catch (err) {
       // If validation error, return 400 Bad Request
@@ -59,7 +59,7 @@ module.exports = (app) => {
     }
   });
 
-  // Error handling
+  // Catch-all error handling
   app.use(function (err, req, res, next) {
     if (req.xhr) {
       res.status(500).send(err);
