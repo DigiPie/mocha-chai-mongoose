@@ -15,6 +15,7 @@ class ProductService {
       quantity,
       isListed,
       dateCreated: Date.now(),
+      dateUpdated: Date.now()
     });
 
     return product.save();

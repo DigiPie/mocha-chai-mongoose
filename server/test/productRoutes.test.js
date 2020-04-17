@@ -73,6 +73,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
           dateCreated: Date.now(),
+          dateUpdated: Date.now()
         });
 
         product.save({}, (err) => {
@@ -236,6 +237,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
           dateCreated: Date.now(),
+          dateUpdated: Date.now()
         });
 
         product.save({}, (err) => {
@@ -282,6 +284,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
           dateCreated: Date.now(),
+          dateUpdated: Date.now()
         });
 
         product.save({}, (err) => {
@@ -328,6 +331,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
           dateCreated: Date.now(),
+          dateUpdated: Date.now()
         });
 
         product.save({}, (err) => {
