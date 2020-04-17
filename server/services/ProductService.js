@@ -9,7 +9,7 @@ class ProductService {
 
   // Returns a Promise which saves one document to the Collection
   static saveOne(name, price, quantity, isListed) {
-    let date = Date.now();
+    const date = Date.now();
 
     const product = new Product({
       name,
@@ -17,10 +17,31 @@ class ProductService {
       quantity,
       isListed,
       dateCreated: date,
-      dateUpdated: date
+      dateUpdated: date,
     });
 
     return product.save();
+  }
+
+  // Returns a Promise which updates one document in the Collection
+  static findByIdAndUpdate(_id, properties) {
+    if (!_id) {
+      let err = new Error("Missing parameter: '_id'.");
+      err.name = "ValidationError";
+      throw err;
+    }
+
+    // Pick out valid properties only
+    properties = _.pick(properties, name, price, quantity, isListed);
+
+    const dateUpdated = Date.now();
+    properties.push(dateUpdated);
+
+    return Product.findByIdAndUpdate(
+      _id,
+      properties,
+      { new: true } // Return the new modified document rather than the original
+    );
   }
 
   // Returns a Promise which deletes one document in the Collection

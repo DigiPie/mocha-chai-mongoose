@@ -74,7 +74,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
           dateCreated: date,
-          dateUpdated: date
+          dateUpdated: date,
         });
 
         product.save({}, (err) => {
@@ -221,6 +221,63 @@ describe("products", () => {
   });
 
   /**
+   * Unit test suite for the PUT /api/products route.
+   */
+  describe("PUT /api/products", () => {
+    /**
+     * Tests the PUT /api/products route with all product parameters specified.
+     * Expected to return the updated product retrieved from the product collection.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully PUT 1 Product with all parameters specified.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 1;
+        const p_isListed = true;
+        const date = Date.now();
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          quantity: p_quantity,
+          isListed: p_isListed,
+          dateCreated: date,
+          dateUpdated: date,
+        });
+
+        product.save({}, (err) => {
+          // Properties to update to
+          const u_name = "Banana";
+          const u_price = 1.5;
+          const u_quantity = 2;
+          const u_isListed = false;
+
+          chai
+            .request(app)
+            .post("/api/products")
+            .send({
+              name: u_name,
+              price: u_price,
+              quantity: u_quantity,
+              isListed: u_isListed,
+            })
+            .end((err, res) => {
+              res.should.have.status(200);
+              const { name, price, quantity, isListed } = res.body;
+              chai.assert.equal(name, u_name);
+              chai.assert.equal(price, u_price);
+              chai.assert.equal(quantity, u_quantity);
+              chai.assert.equal(isListed, u_isListed);
+              done();
+            })
+            .timeout(500);
+        });
+      });
+    });
+  });
+
+  /**
    * Unit test suite for the DELETE /api/products route.
    */
   describe("DELETE /api/products", () => {
@@ -239,7 +296,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
           dateCreated: date,
-          dateUpdated: date
+          dateUpdated: date,
         });
 
         product.save({}, (err) => {
@@ -287,7 +344,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
           dateCreated: date,
-          dateUpdated: date
+          dateUpdated: date,
         });
 
         product.save({}, (err) => {
@@ -335,7 +392,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
           dateCreated: date,
-          dateUpdated: date
+          dateUpdated: date,
         });
 
         product.save({}, (err) => {

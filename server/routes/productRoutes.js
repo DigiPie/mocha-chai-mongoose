@@ -36,6 +36,31 @@ module.exports = (app) => {
     }
   });
 
+  // Updates a product
+  app.put("/api/products", async (req, res, next) => {
+    const { _id, name, price, quantity, isListed } = req.body;
+    // Remove undefined properties
+    let properties = _.reject([name, price, quantity, isListed], _.isNil);
+
+    try {
+      const product = await ProductService.findByIdAndUpdate(_id, properties);
+      res.send(product);
+    } catch (err) {
+      // If validation error, return 400 Bad Request
+      if (_.isEqual(err.name, "ValidationError")) {
+        return res.status(400).send(err);
+      }
+
+      // If fields are malformed, return 400 Bad Request
+      if (_.isEqual(err.name, "CastError")) {
+        return res.status(400).send(err);
+      }
+
+      // Pass on unexpected error
+      return next(err);
+    }
+  });
+
   // Deletes a product
   app.delete("/api/products", async (req, res, next) => {
     const { _id } = req.body;
