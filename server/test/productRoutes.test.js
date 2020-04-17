@@ -61,10 +61,10 @@ describe("products", () => {
 
     /**
      * Tests the GET /api/products route.
-     * Expected to return an array of 1 Product added via the Mongoose model directly.
+     * Expected to return an array of 1 product added via the Mongoose model directly.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully GET an empty array of 1 Product.", (done) => {
+    it("Successfully GET an empty array of 1 product.", (done) => {
       Product.deleteMany({}, (err) => {
         const p_name = "Apple";
         const p_price = 1.0;
@@ -99,8 +99,8 @@ describe("products", () => {
    */
   describe("POST /api/products", () => {
     /**
-     * Tests the POST /api/products route with all Product parameters specified.
-     * Expected to return the added Product retrieved from the Product collection.
+     * Tests the POST /api/products route with all product parameters specified.
+     * Expected to return the added product retrieved from the product collection.
      * Expected to return a 200 OK status code.
      */
     it("Successfully POST 1 Product with all parameters specified.", (done) => {
@@ -131,8 +131,8 @@ describe("products", () => {
     });
 
     /**
-     * Tests the POST /api/products route with only required Product parameters specified.
-     * Expected to return the added Product retrieved from the Product collection.
+     * Tests the POST /api/products route with only required product parameters specified.
+     * Expected to return the added product retrieved from the product collection.
      * Expected to return a 200 OK status code.
      */
     it("Successfully POST 1 Product with only required parameters specified.", (done) => {
@@ -157,7 +157,7 @@ describe("products", () => {
     });
 
     /**
-     * Tests the POST /api/products route with all Product parameters missing.
+     * Tests the POST /api/products route with all product parameters missing.
      * Expected to return a ValidationError.
      * Expected to return a 400 Bad Request status code.
      */
@@ -224,7 +224,7 @@ describe("products", () => {
   describe("DELETE /api/products", () => {
     /**
      * Tests the DELETE /api/products route.
-     * Expected to delete the Product added via the Mongoose model directly.
+     * Expected to delete the product added via the Mongoose model directly.
      * Expected to return a 200 OK status code.
      */
     it("Successfully DELETE 1 Product.", (done) => {
@@ -243,7 +243,7 @@ describe("products", () => {
           const { _id } = product;
           chai.assert.isNotNull(_id);
 
-          // There should be 1 Product in the Collection
+          // There should be 1 product in the Collection
           Product.countDocuments({}, (err, count) => {
             chai.assert.equal(count, 1);
           });
@@ -269,7 +269,7 @@ describe("products", () => {
 
     /**
      * Tests the DELETE /api/products route with required parameter '_id' missing.
-     * Expected to not delete the Product added via the Mongoose model directly.
+     * Expected to not delete the product added via the Mongoose model directly.
      * Expected to return a ValidationError.
      * Expected to return a 400 Bad Request status code.
      */
@@ -289,7 +289,7 @@ describe("products", () => {
           const { _id } = product;
           chai.assert.isNotNull(_id);
 
-          // There should be 1 Product in the Collection
+          // There should be 1 product in the Collection
           Product.countDocuments({}, (err, count) => {
             chai.assert.equal(count, 1);
           });
@@ -301,7 +301,7 @@ describe("products", () => {
               res.should.have.status(400);
               chai.assert.equal(res.body.name, "ValidationError");
 
-              // There should still be 1 Product in the Collection
+              // There should still be 1 product in the Collection
               Product.countDocuments({}, (err, count) => {
                 chai.assert.equal(count, 1);
               });
@@ -315,7 +315,7 @@ describe("products", () => {
 
     /**
      * Tests the DELETE /api/products route with required parameter '_id' being malformed.
-     * Expected to not delete the Product added via the Mongoose model directly.
+     * Expected to not delete the product added via the Mongoose model directly.
      * Expected to return a CastError.
      * Expected to return a 400 Bad Request status code.
      */
@@ -335,7 +335,7 @@ describe("products", () => {
           const { _id } = product;
           chai.assert.isNotNull(_id);
 
-          // There should be 1 Product in the Collection
+          // There should be 1 product in the Collection
           Product.countDocuments({}, (err, count) => {
             chai.assert.equal(count, 1);
           });
@@ -348,7 +348,7 @@ describe("products", () => {
               res.should.have.status(400);
               chai.assert.equal(res.body.name, "CastError");
 
-              // There should still be 1 Product in the Collection
+              // There should still be 1 product in the Collection
               Product.countDocuments({}, (err, count) => {
                 chai.assert.equal(count, 1);
               });
@@ -369,7 +369,7 @@ describe("products", () => {
   describe("GET and POST /api/products", () => {
     /**
      * Tests the POST /api/products and GET /api/products route.
-     * Expected to return an array of 1 Product added by POST.
+     * Expected to return an array of 1 product added by POST.
      * Expected to return a 200 OK status code.
      */
     it("Successfully GET an array of 1 Product added by POST.", (done) => {
@@ -423,7 +423,7 @@ describe("products", () => {
      */
     it("Successfully GET an array of 2 Products added by POST.", (done) => {
       Product.deleteMany({}, (err) => {
-        // Add 1st Product
+        // Add 1st product
         const p_name = "Apple";
         const p_price = 1.0;
         const p_quantity = 1;
@@ -448,7 +448,7 @@ describe("products", () => {
           })
           .timeout(500);
 
-        // Add 2nd Product
+        // Add 2nd product
         const p_name_2 = "Banana";
         const p_price_2 = 15;
 
@@ -488,6 +488,134 @@ describe("products", () => {
             chai.assert.equal(name_2, p_name_2);
             chai.assert.equal(price_2, p_price_2);
             done();
+          })
+          .timeout(500);
+      });
+    });
+  });
+
+  /**
+   * Integration test suite for the POST /api/products and DELETE /api/products route.
+   */
+  describe("POST and DELETE /api/products", () => {
+    /**
+     * Tests the POST /api/products and DELETE /api/products route.
+     * Expected to POST a product and then DELETE it successfully.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully POST 1 Product then DELETE 1 Product.", (done) => {
+      Product.deleteMany({}, (err) => {
+        // Add the product
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 1;
+        const p_isListed = false;
+
+        chai
+          .request(app)
+          .post("/api/products")
+          .send({
+            name: p_name,
+            price: p_price,
+            quantity: p_quantity,
+            isListed: p_isListed,
+          })
+          .end((err, res) => {
+            res.should.have.status(200);
+            const { _id, name, price, quantity, isListed } = res.body;
+            chai.assert.equal(name, p_name);
+            chai.assert.equal(price, p_price);
+            chai.assert.equal(quantity, p_quantity);
+            chai.assert.equal(isListed, p_isListed);
+            // Delete the product
+            chai
+              .request(app)
+              .delete("/api/products")
+              .send({ _id })
+              .end((err, res) => {
+                res.should.have.status(200);
+
+                // There should be 0 Products in the Collection after deletion
+                Product.countDocuments({}, (err, count) => {
+                  chai.assert.equal(count, 0);
+                });
+
+                done();
+              });
+          })
+          .timeout(500);
+      });
+    });
+
+    /**
+     * Tests the POST /api/products and DELETE /api/products route.
+     * Expected to POST 2 products and then DELETE the second one successfully.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully POST 2 products then DELETE 1 Product.", (done) => {
+      Product.deleteMany({}, (err) => {
+        // Add 1st product
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 1;
+        const p_isListed = false;
+
+        chai
+          .request(app)
+          .post("/api/products")
+          .send({
+            name: p_name,
+            price: p_price,
+            quantity: p_quantity,
+            isListed: p_isListed,
+          })
+          .end((err, res) => {
+            res.should.have.status(200);
+            const { name, price, quantity, isListed } = res.body;
+            chai.assert.equal(name, p_name);
+            chai.assert.equal(price, p_price);
+            chai.assert.equal(quantity, p_quantity);
+            chai.assert.equal(isListed, p_isListed);
+          })
+          .timeout(500);
+
+        // Add 2nd product
+        const p_name_2 = "Banana";
+        const p_price_2 = 15;
+
+        chai
+          .request(app)
+          .post("/api/products")
+          .send({
+            name: p_name_2,
+            price: p_price_2,
+          })
+          .end((err, res) => {
+            res.should.have.status(200);
+            const { _id, name, price } = res.body;
+            chai.assert.equal(name, p_name_2);
+            chai.assert.equal(price, p_price_2);
+
+            // There should be 2 Products
+            Product.countDocuments({}, (err, count) => {
+              chai.assert.equal(count, 2);
+            });
+
+            // Delete the product
+            chai
+              .request(app)
+              .delete("/api/products")
+              .send({ _id })
+              .end((err, res) => {
+                res.should.have.status(200);
+
+                // There should be 1 Product left
+                Product.countDocuments({}, (err, count) => {
+                  chai.assert.equal(count, 1);
+                });
+
+                done();
+              });
           })
           .timeout(500);
       });
