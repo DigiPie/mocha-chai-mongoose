@@ -9,13 +9,15 @@ class ProductService {
 
   // Returns a Promise which saves one document to the Collection
   static saveOne(name, price, quantity, isListed) {
+    let date = Date.now();
+
     const product = new Product({
       name,
       price,
       quantity,
       isListed,
-      dateCreated: Date.now(),
-      dateUpdated: Date.now()
+      dateCreated: date,
+      dateUpdated: date
     });
 
     return product.save();

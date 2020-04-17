@@ -68,12 +68,13 @@ describe("products", () => {
       Product.deleteMany({}, (err) => {
         const p_name = "Apple";
         const p_price = 1.0;
+        const date = Date.now();
 
         const product = new Product({
           name: p_name,
           price: p_price,
-          dateCreated: Date.now(),
-          dateUpdated: Date.now()
+          dateCreated: date,
+          dateUpdated: date
         });
 
         product.save({}, (err) => {
@@ -232,12 +233,13 @@ describe("products", () => {
       Product.deleteMany({}, (err) => {
         const p_name = "Apple";
         const p_price = 1.0;
+        const date = Date.now();
 
         const product = new Product({
           name: p_name,
           price: p_price,
-          dateCreated: Date.now(),
-          dateUpdated: Date.now()
+          dateCreated: date,
+          dateUpdated: date
         });
 
         product.save({}, (err) => {
@@ -279,12 +281,13 @@ describe("products", () => {
       Product.deleteMany({}, (err) => {
         const p_name = "Apple";
         const p_price = 1.0;
+        const date = Date.now();
 
         const product = new Product({
           name: p_name,
           price: p_price,
-          dateCreated: Date.now(),
-          dateUpdated: Date.now()
+          dateCreated: date,
+          dateUpdated: date
         });
 
         product.save({}, (err) => {
@@ -326,12 +329,13 @@ describe("products", () => {
       Product.deleteMany({}, (err) => {
         const p_name = "Apple";
         const p_price = 1.0;
+        const date = Date.now();
 
         const product = new Product({
           name: p_name,
           price: p_price,
-          dateCreated: Date.now(),
-          dateUpdated: Date.now()
+          dateCreated: date,
+          dateUpdated: date
         });
 
         product.save({}, (err) => {
