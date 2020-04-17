@@ -23,7 +23,6 @@ View the [Test Plan](TEST_PLAN.md) for more information.
 
 To be completed by end April 2020:
 
-- Integration test cases between `POST` and `DELETE` (v0.0.7)
 - Implementation of `PUT /api/products` route (v0.0.8)
 - Unit test cases for `PUT` (v0.0.8)
 - Integration test cases between `POST` and `PUT` (v0.0.9)
