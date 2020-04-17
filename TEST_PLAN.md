@@ -27,4 +27,4 @@ Test cases:
 |11    |GET and POST /api/products|Successfully GET an array of 1 Product added by POST.               |
 |12    |GET and POST /api/products|Successfully GET an array of 2 Products added by POST.              |
 |13    |POST and DELETE /api/products|Successfully POST 1 Product then DELETE 1 Product.               |
-|14    |POST and DELETE /api/products|Successfully POST 2 products then DELETE 1 Product.              |
+|14    |POST and DELETE /api/products|Successfully POST 2 Products then DELETE 1 Product.              |

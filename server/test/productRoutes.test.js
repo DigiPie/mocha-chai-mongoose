@@ -552,7 +552,7 @@ describe("products", () => {
      * Expected to POST 2 products and then DELETE the second one successfully.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully POST 2 products then DELETE 1 Product.", (done) => {
+    it("Successfully POST 2 Products then DELETE 1 Product.", (done) => {
       Product.deleteMany({}, (err) => {
         // Add 1st product
         const p_name = "Apple";
