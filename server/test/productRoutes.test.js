@@ -247,6 +247,10 @@ describe("products", () => {
         });
 
         product.save({}, (err) => {
+          // Retrieve the saved document's Mongoose ID
+          const { _id } = product;
+          chai.assert.isNotNull(_id);
+
           // Properties to update to
           const u_name = "Banana";
           const u_price = 1.5;
@@ -255,8 +259,9 @@ describe("products", () => {
 
           chai
             .request(app)
-            .post("/api/products")
+            .put("/api/products")
             .send({
+              _id: _id,
               name: u_name,
               price: u_price,
               quantity: u_quantity,
@@ -269,6 +274,58 @@ describe("products", () => {
               chai.assert.equal(price, u_price);
               chai.assert.equal(quantity, u_quantity);
               chai.assert.equal(isListed, u_isListed);
+              done();
+            })
+            .timeout(500);
+        });
+      });
+    });
+
+    /**
+     * Tests the PUT /api/products route with only one parameter specified besides '_id'.
+     * Expected to return the updated product retrieved from the product collection.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully PUT 1 Product with all parameters specified.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 1;
+        const p_isListed = true;
+        const date = Date.now();
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          quantity: p_quantity,
+          isListed: p_isListed,
+          dateCreated: date,
+          dateUpdated: date,
+        });
+
+        product.save({}, (err) => {
+          // Retrieve the saved document's Mongoose ID
+          const { _id } = product;
+          chai.assert.isNotNull(_id);
+
+          // Properties to update to
+          const u_name = "Carrot";
+
+          chai
+            .request(app)
+            .put("/api/products")
+            .send({
+              _id: _id,
+              name: u_name,
+            })
+            .end((err, res) => {
+              res.should.have.status(200);
+              const { name, price, quantity, isListed } = res.body;
+              // Only name was updated, other properties should still be the same as previously
+              chai.assert.equal(name, u_name);
+              chai.assert.equal(price, p_price);
+              chai.assert.equal(quantity, p_quantity);
+              chai.assert.equal(isListed, p_isListed);
               done();
             })
             .timeout(500);

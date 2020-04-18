@@ -38,9 +38,9 @@ module.exports = (app) => {
 
   // Updates a product
   app.put("/api/products", async (req, res, next) => {
-    const { _id, name, price, quantity, isListed } = req.body;
-    // Remove undefined properties
-    let properties = _.reject([name, price, quantity, isListed], _.isNil);
+    const { _id } = req.body;
+    // Only pick out valid properties, discard the rest
+    const properties = _.pick(req.body, "name", "price", "quantity", "isListed");
 
     try {
       const product = await ProductService.findByIdAndUpdate(_id, properties);

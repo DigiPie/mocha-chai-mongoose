@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const mongoose = require("mongoose");
 const Product = mongoose.model("products");
 
@@ -31,12 +32,10 @@ class ProductService {
       throw err;
     }
 
-    // Pick out valid properties only
-    properties = _.pick(properties, name, price, quantity, isListed);
-
-    const dateUpdated = Date.now();
-    properties.push(dateUpdated);
-
+    // Only pick out valid properties, discard the rest
+    properties = _.pick(properties, "name", "price", "quantity", "isListed");
+    properties.dateUpdated = Date.now(); // Append dateUpdated
+    
     return Product.findByIdAndUpdate(
       _id,
       properties,
