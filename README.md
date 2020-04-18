@@ -18,7 +18,7 @@ Furthermore, the code is set up such that it will automatically switch to Produc
 
 ### Status
 
-The current plan is to implement `GET`, `POST`, `PUT` and `DELETE` routes and their unit and integration test cases by [`v0.1.0`](https://github.com/DigiPie/mocha-chai-mongoose/milestone/1). The current version is `v0.0.7`.
+The current plan is to implement `GET`, `POST`, `PUT` and `DELETE` routes and their unit and integration test cases by [`v0.1.0`](https://github.com/DigiPie/mocha-chai-mongoose/milestone/1). The current version is [`v0.0.8`](https://github.com/DigiPie/mocha-chai-mongoose/releases).
 
 View the [Project Board](https://github.com/DigiPie/mocha-chai-mongoose/projects/1) for more information.
 
