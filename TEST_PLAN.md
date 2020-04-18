@@ -18,20 +18,25 @@ Test cases:
 
 ### Test cases
 
-| Number | Suite | Test case |
-|-------:|-------------------------------|-------------------------------------------------------|
-| 1 | GET /api/products | Successfully GET an empty array of 0 Products. |
-| 2 | GET /api/products | Successfully GET an empty array of 1 Product. |
-| 3 | POST /api/products | Successfully POST 1 Product with all parameters specified. |
-| 4 | POST /api/products | Successfully POST 1 Product with only required parameters specified. |
-| 5 | POST /api/products | Fail to POST 1 Product because all parameters are missing. |
-| 6 | POST /api/products | Fail to POST 1 Product because 'name' parameter is missing. |
-| 7 | POST /api/products | Fail to POST 1 Product because 'price' parameter is missing. |
-| 8 | PUT /api/products | Successfully PUT 1 Product with all parameters specified. |
-| 9 | DELETE /api/products | Successfully DELETE 1 Product. |
-| 10 | DELETE /api/products | Fail to DELETE 1 Product because '_id' is missing. |
-| 11 | DELETE /api/products | Fail to DELETE 1 Product because '_id' is malformed. |
-| 12 | GET and POST /api/products | Successfully GET an array of 1 Product added by POST. |
-| 13 | GET and POST /api/products | Successfully GET an array of 2 Products added by POST. |
-| 14 | POST and DELETE /api/products | Successfully POST 1 Product then DELETE 1 Product. |
-| 15 | POST and DELETE /api/products | Successfully POST 2 Products then DELETE 1 Product. |
+|Number|Suite          |Test case                                                                  |
+|-----:|---------------|---------------------------------------------------------------------------|
+|1     |GET            |Successfully GET an empty array of 0 Products.                             |
+|2     |GET            |Successfully GET an empty array of 1 Product.                              |
+|3     |POST           |Successfully POST 1 Product with all parameters specified.                 |
+|4     |POST           |Successfully POST 1 Product with only required parameters specified.       |
+|5     |POST           |Fail to POST 1 Product because all parameters are missing.                 |
+|6     |POST           |Fail to POST 1 Product because 'name' parameter is missing.                |
+|7     |POST           |Fail to POST 1 Product because 'price' parameter is missing.               |
+|8     |PUT            |Successfully PUT 1 Product with all parameters specified.                  |
+|9     |PUT            |Successfully PUT 1 Product with only one parameter specified besides '_id'.|
+|10    |PUT            |Successfully PUT 1 Product with no parameters specified.                   |
+|11    |PUT            |Successfully PUT 1 Product with valid and non-valid parameters specified.  |
+|12    |PUT            |Fail to PUT 1 Product because '_id' is missing.                            |
+|13    |PUT            |Fail to PUT 1 Product because '_id' is malformed.                          |
+|14    |DELETE         |Successfully DELETE 1 Product.                                             |
+|15    |DELETE         |Fail to DELETE 1 Product because '_id' is missing.                         |
+|16    |DELETE         |Fail to DELETE 1 Product because '_id' is malformed.                       |
+|17    |GET and POST   |Successfully GET an array of 1 Product added by POST.                      |
+|18    |GET and POST   |Successfully GET an array of 2 Products added by POST.                     |
+|19    |POST and DELETE|Successfully POST 1 Product then DELETE 1 Product.                         |
+|20    |POST and DELETE|Successfully POST 2 Products then DELETE 1 Product.                        |

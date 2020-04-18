@@ -286,7 +286,7 @@ describe("products", () => {
      * Expected to return the updated product retrieved from the product collection.
      * Expected to return a 200 OK status code.
      */
-    it("Successfully PUT 1 Product with all parameters specified.", (done) => {
+    it("Successfully PUT 1 Product with only one parameter specified besides '_id'.", (done) => {
       Product.deleteMany({}, (err) => {
         const p_name = "Apple";
         const p_price = 1.0;
@@ -326,6 +326,186 @@ describe("products", () => {
               chai.assert.equal(price, p_price);
               chai.assert.equal(quantity, p_quantity);
               chai.assert.equal(isListed, p_isListed);
+              done();
+            })
+            .timeout(500);
+        });
+      });
+    });
+
+    /**
+     * Tests the PUT /api/products route with no parameters specified.
+     * Expected to return the updated product retrieved from the product collection.
+     * Updated product should be the same as the original product.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully PUT 1 Product with no parameters specified.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 0;
+        const p_isListed = false;
+        const date = Date.now();
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          quantity: p_quantity,
+          isListed: p_isListed,
+          dateCreated: date,
+          dateUpdated: date,
+        });
+
+        product.save({}, (err) => {
+          // Retrieve the saved document's Mongoose ID
+          const { _id } = product;
+          chai.assert.isNotNull(_id);
+
+          chai
+            .request(app)
+            .put("/api/products")
+            .send({
+              _id: _id,
+            })
+            .end((err, res) => {
+              res.should.have.status(200);
+              const { name, price, quantity, isListed } = res.body;
+              // No properties were specified for update, so all properties should be unchanged
+              chai.assert.equal(name, p_name);
+              chai.assert.equal(price, p_price);
+              chai.assert.equal(quantity, p_quantity);
+              chai.assert.equal(isListed, p_isListed);
+              done();
+            })
+            .timeout(500);
+        });
+      });
+    });
+
+    /**
+     * Tests the PUT /api/products route with valid and non-valid parameters specified.
+     * Non-valid parameters are expected to be discarded, while valid parameters are still read.
+     * Expected to return the updated product retrieved from the product collection.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully PUT 1 Product with valid and non-valid parameters specified.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Carrot Cake";
+        const p_price = 1.0;
+        const p_quantity = 50;
+        const p_isListed = true;
+        const date = Date.now();
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          quantity: p_quantity,
+          isListed: p_isListed,
+          dateCreated: date,
+          dateUpdated: date,
+        });
+
+        product.save({}, (err) => {
+          // Retrieve the saved document's Mongoose ID
+          const { _id } = product;
+          chai.assert.isNotNull(_id);
+
+          // Properties to update to
+          const u_name = "Carrot";
+          const u_isListed = false;
+          const i_age = 20; // Invalid property which should be ignored
+
+          chai
+            .request(app)
+            .put("/api/products")
+            .send({
+              _id: _id,
+              name: u_name,
+              isListed: u_isListed,
+              age: i_age, // Invalid property
+            })
+            .end((err, res) => {
+              res.should.have.status(200);
+              const { name, price, quantity, isListed, age } = res.body;
+              // Only name and isListed were updated
+              chai.assert.equal(name, u_name);
+              chai.assert.equal(isListed, u_isListed);
+              chai.assert.equal(price, p_price);
+              chai.assert.equal(quantity, p_quantity);
+
+              chai.assert.isUndefined(age); // Invalid property should not be added to product
+              done();
+            })
+            .timeout(500);
+        });
+      });
+    });
+
+    /**
+     * Tests the PUT /api/products route with required parameter '_id' missing.
+     * Expected to not update the product added via the Mongoose model directly.
+     * Expected to return a ValidationError.
+     * Expected to return a 400 Bad Request status code.
+     */
+    it("Fail to PUT 1 Product because '_id' is missing.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 0;
+        const p_isListed = false;
+        const date = Date.now();
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          quantity: p_quantity,
+          isListed: p_isListed,
+          dateCreated: date,
+          dateUpdated: date,
+        });
+
+        product.save({}, (err) => {
+          chai
+            .request(app)
+            .put("/api/products")
+            .end((err, res) => {
+              res.should.have.status(400);
+              chai.assert.equal(res.body.name, "ValidationError");
+              done();
+            })
+            .timeout(500);
+        });
+      });
+    });
+
+    /**
+     * Tests the PUT /api/products route with required parameter '_id' being malformed.
+     * Expected to not update the product added via the Mongoose model directly.
+     * Expected to return a CastError.
+     * Expected to return a 400 Bad Request status code.
+     */
+    it("Fail to PUT 1 Product because '_id' is malformed.", (done) => {
+      Product.deleteMany({}, (err) => {
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const date = Date.now();
+
+        const product = new Product({
+          name: p_name,
+          price: p_price,
+          dateCreated: date,
+          dateUpdated: date,
+        });
+
+        product.save({}, (err) => {
+          chai
+            .request(app)
+            .put("/api/products")
+            .send({ _id: "Banana" })
+            .end((err, res) => {
+              res.should.have.status(400);
+              chai.assert.equal(res.body.name, "CastError");
+
               done();
             })
             .timeout(500);
@@ -453,10 +633,6 @@ describe("products", () => {
         });
 
         product.save({}, (err) => {
-          // Retrieve the saved document's Mongoose ID
-          const { _id } = product;
-          chai.assert.isNotNull(_id);
-
           // There should be 1 product in the Collection
           Product.countDocuments({}, (err, count) => {
             chai.assert.equal(count, 1);
