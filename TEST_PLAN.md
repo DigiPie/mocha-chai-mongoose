@@ -1,17 +1,23 @@
 # mocha-chai-mongoose
 
 ## Test Plan
-This test plan details how the _mocha-chai-mongoose_ backend server API is tested.
 
-In this project, a single test file: _test/productRoutes.test.js_ is used to test a single Express route: _routes/productRoutes.js_ which handles API calls pertaining to a single Mongoose model: _models/Product.js_.
+This test plan details how the `mocha-chai-mongoose` backend server API is tested.
+
+In this project:
+
+- `test/productRoutes.test.js` contains unit and integration tests for `routes/productRoutes.js`.
+- `routes/productRoutes.js` contains routes which interact with `services/ProductService.js`.
+- `services/ProductService.js` contains controller methods which interact with `models/Product.js`.
 
 Test cases:
 
-- Unit test cases are written for all routes implemented in _productRoutes.js_.
+- Unit test cases are written for all routes implemented in `productRoutes.js`.
     - For unit test cases written for `GET`, `PUT` and `DELETE` which require having an existing Product in the Product collection, the test case directly saves a new Product to the Product Mongoose model before testing.
 - Integration test cases which test multiple routes together are also written.
 
 ### Test cases
+
 | Number | Suite | Test case |
 |-------:|-------------------------------|-------------------------------------------------------|
 | 1 | GET /api/products | Successfully GET an empty array of 0 Products. |
