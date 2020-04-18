@@ -13,20 +13,18 @@ You will be able to test your code **locally** and also automatically when you p
 Furthermore, the code is set up such that it will automatically switch to Production Keys rather than Development Keys on deployment.
 
 ### Test suite
-In this project, a single test file: _test/productRoutes.test.js_ is used to test a single Express route: _routes/productRoutes.js_ which handles API calls pertaining to a single Mongoose model: _models/Product.js_.
+
+In this project:
+
+- `test/productRoutes.test.js` contains unit and integration tests for `routes/productRoutes.js`.
+- `routes/productRoutes.js` contains routes which interact with `services/ProductService.js`.
+- `services/ProductService.js` contains controller methods which interact with `models/Product.js`.
 
 View the [Test Plan](TEST_PLAN.md) for more information.
 
-**Work-in-progress:** Currently, the `GET /api/products`, `POST /api/products` and `DELETE /api/products` routes have been implemented. Unit and integration test cases have been written for these routes.
+**Work-in-progress:** The current plan is to implement `GET`, `POST`, `PUT` and `DELETE` routes and their unit and integration test cases by [`v0.1.0`](https://github.com/DigiPie/mocha-chai-mongoose/milestone/1). The current version is `v0.0.7`.
 
-**What's left:**
-
-To be completed by end April 2020:
-
-- Implementation of `PUT /api/products` route (v0.0.8)
-- Unit test cases for `PUT` (v0.0.8)
-- Integration test cases between `POST` and `PUT` (v0.0.9)
-- Milestone v0.1.0: Additional code clean-up and comments (v0.1.0)
+View the [Project Board](https://github.com/DigiPie/mocha-chai-mongoose/projects/1) for more information.
 
 ## Local testing guide
 To deploy this project locally for development purposes, follow the steps below.
@@ -41,15 +39,15 @@ To begin, first install and set up the following.
 ### Project setup
 Next, set up the NodeJS application with the following steps.
 
-1. Open the _server_ sub-directory (folder) within the _mocha-chai-mongoose_ folder you cloned (e.g. `cd server`).
+1. Open the `server` sub-directory (folder) within the `mocha-chai-mongoose` folder you cloned (e.g. `cd server`).
 2. Install the required packages (which are specified in `package.json`) by entering `npm install`.
-3. Open _config/example_dev.js_ and fill in the `mongoURI` to your development MongoDB instance.
+3. Open `config/example_dev.js and fill in the `mongoURI` to your development MongoDB instance.
 
 ### Testing
-Finally, you can execute the Mocha test suites under the _test/_ directory.
+Finally, you can execute the Mocha test suites under the test/ directory.
 
-1. Check that you are in the _server_ sub-directory.
-2. Run this project on your local server by running `npm test` (check out the `scripts` section in _package.json_ for more info).
+1. Check that you are in the server sub-directory.
+2. Run this project on your local server by running `npm test` (check out the `scripts` section in package.json for more info).
 4. To exit the test, press `CTRL + C`.
 
 ## Automated testing via Github action
