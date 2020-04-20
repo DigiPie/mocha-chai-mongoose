@@ -19,3 +19,5 @@
 18,GET and POST,Successfully GET an array of 2 Products added by POST.
 19,POST and DELETE,Successfully POST 1 Product then DELETE 1 Product.
 20,POST and DELETE,Successfully POST 2 Products then DELETE 1 Product.
+21,POST and PUT,Successfully POST 1 Product then PUT 1 Product.
+22,POST and PUT,Successfully POST 2 Products then PUT 1 Product.

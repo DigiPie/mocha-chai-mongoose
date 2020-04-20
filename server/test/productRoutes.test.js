@@ -55,7 +55,7 @@ describe("products", () => {
             res.body.length.should.be.eql(0);
             done();
           })
-          .timeout(500);
+          .timeout(2000);
       });
     });
 
@@ -90,7 +90,7 @@ describe("products", () => {
               chai.assert.equal(price, p_price);
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -129,7 +129,7 @@ describe("products", () => {
           chai.assert.equal(isListed, p_isListed);
           done();
         })
-        .timeout(500);
+        .timeout(2000);
     });
 
     /**
@@ -155,7 +155,7 @@ describe("products", () => {
           chai.assert.equal(price, p_price);
           done();
         })
-        .timeout(500);
+        .timeout(2000);
     });
 
     /**
@@ -172,7 +172,7 @@ describe("products", () => {
           chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
-        .timeout(500);
+        .timeout(2000);
     });
 
     /**
@@ -194,7 +194,7 @@ describe("products", () => {
           chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
-        .timeout(500);
+        .timeout(2000);
     });
 
     /**
@@ -216,7 +216,7 @@ describe("products", () => {
           chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
-        .timeout(500);
+        .timeout(2000);
     });
   });
 
@@ -276,7 +276,7 @@ describe("products", () => {
               chai.assert.equal(isListed, u_isListed);
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -328,7 +328,7 @@ describe("products", () => {
               chai.assert.equal(isListed, p_isListed);
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -377,7 +377,7 @@ describe("products", () => {
               chai.assert.equal(isListed, p_isListed);
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -436,7 +436,7 @@ describe("products", () => {
               chai.assert.isUndefined(age); // Invalid property should not be added to product
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -473,7 +473,7 @@ describe("products", () => {
               chai.assert.equal(res.body.name, "ValidationError");
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -508,7 +508,7 @@ describe("products", () => {
 
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -560,7 +560,7 @@ describe("products", () => {
 
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -608,7 +608,7 @@ describe("products", () => {
 
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -653,7 +653,7 @@ describe("products", () => {
 
               done();
             })
-            .timeout(500);
+            .timeout(2000);
         });
       });
     });
@@ -694,7 +694,7 @@ describe("products", () => {
             chai.assert.equal(quantity, p_quantity);
             chai.assert.equal(isListed, p_isListed);
           })
-          .timeout(500);
+          .timeout(2000);
 
         chai
           .request(app)
@@ -710,7 +710,7 @@ describe("products", () => {
             chai.assert.equal(isListed, p_isListed);
             done();
           })
-          .timeout(500);
+          .timeout(2000);
       });
     });
 
@@ -763,7 +763,7 @@ describe("products", () => {
             chai.assert.equal(name, p_name_2);
             chai.assert.equal(price, p_price_2);
           })
-          .timeout(500);
+          .timeout(2000);
 
         // GET the 2 added products
         chai
@@ -787,7 +787,7 @@ describe("products", () => {
             chai.assert.equal(price_2, p_price_2);
             done();
           })
-          .timeout(500);
+          .timeout(2000);
       });
     });
   });
@@ -841,7 +841,7 @@ describe("products", () => {
                 done();
               });
           })
-          .timeout(500);
+          .timeout(2000);
       });
     });
 
@@ -875,7 +875,7 @@ describe("products", () => {
             chai.assert.equal(quantity, p_quantity);
             chai.assert.equal(isListed, p_isListed);
           })
-          .timeout(500);
+          .timeout(2000);
 
         // Add 2nd product
         const p_name_2 = "Banana";
@@ -915,7 +915,158 @@ describe("products", () => {
                 done();
               });
           })
-          .timeout(500);
+          .timeout(2000);
+      });
+    });
+  });
+
+  /**
+   * Integration test suite for the POST /api/products and PUT /api/products route.
+   */
+  describe("POST and PUT /api/products", () => {
+    /**
+     * Tests the POST /api/products and PUT /api/products route.
+     * Expected to POST a product and then PUT it successfully.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully POST 1 Product then PUT 1 Product.", (done) => {
+      Product.deleteMany({}, (err) => {
+        // Add the product
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 1;
+        const p_isListed = false;
+
+        chai
+          .request(app)
+          .post("/api/products")
+          .send({
+            name: p_name,
+            price: p_price,
+            quantity: p_quantity,
+            isListed: p_isListed,
+          })
+          .end((err, res) => {
+            res.should.have.status(200);
+            const { _id, name, price, quantity, isListed } = res.body;
+            chai.assert.equal(name, p_name);
+            chai.assert.equal(price, p_price);
+            chai.assert.equal(quantity, p_quantity);
+            chai.assert.equal(isListed, p_isListed);
+
+            // Properties to update to
+            const u_name = "Banana";
+            const u_price = 1.5;
+            const u_quantity = 2;
+            const u_isListed = false;
+
+            // Update the product
+            chai
+              .request(app)
+              .put("/api/products")
+              .send({
+                _id: _id,
+                name: u_name,
+                price: u_price,
+                quantity: u_quantity,
+                isListed: u_isListed,
+              })
+              .end((err, res) => {
+                res.should.have.status(200);
+                const { name, price, quantity, isListed } = res.body;
+                chai.assert.equal(name, u_name);
+                chai.assert.equal(price, u_price);
+                chai.assert.equal(quantity, u_quantity);
+                chai.assert.equal(isListed, u_isListed);
+                done();
+              });
+          })
+          .timeout(2000);
+      });
+    });
+
+    /**
+     * Tests the POST /api/products and PUT /api/products route.
+     * Expected to POST 2 products and then PUT the second one successfully.
+     * Expected to return a 200 OK status code.
+     */
+    it("Successfully POST 2 Products then PUT 1 Product.", (done) => {
+      Product.deleteMany({}, (err) => {
+        // Add 1st product
+        const p_name = "Apple";
+        const p_price = 1.0;
+        const p_quantity = 1;
+        const p_isListed = false;
+
+        chai
+          .request(app)
+          .post("/api/products")
+          .send({
+            name: p_name,
+            price: p_price,
+            quantity: p_quantity,
+            isListed: p_isListed,
+          })
+          .end((err, res) => {
+            res.should.have.status(200);
+            const { name, price, quantity, isListed } = res.body;
+            chai.assert.equal(name, p_name);
+            chai.assert.equal(price, p_price);
+            chai.assert.equal(quantity, p_quantity);
+            chai.assert.equal(isListed, p_isListed);
+          })
+          .timeout(2000);
+
+        // Add 2nd product
+        const p_name_2 = "Banana";
+        const p_price_2 = 15;
+
+        chai
+          .request(app)
+          .post("/api/products")
+          .send({
+            name: p_name_2,
+            price: p_price_2,
+          })
+          .end((err, res) => {
+            res.should.have.status(200);
+            const { _id, name, price } = res.body;
+            chai.assert.equal(name, p_name_2);
+            chai.assert.equal(price, p_price_2);
+
+            // There should be 2 Products
+            Product.countDocuments({}, (err, count) => {
+              chai.assert.equal(count, 2);
+            });
+
+            // Properties to update to
+            const u_name = "Carrot";
+            const u_price = 1.5;
+            const u_quantity = 2;
+            const u_isListed = false;
+
+            // Update the product
+            chai
+              .request(app)
+              .put("/api/products")
+              .send({
+                _id: _id,
+                name: u_name,
+                price: u_price,
+                quantity: u_quantity,
+                isListed: u_isListed,
+              })
+              .end((err, res) => {
+                res.should.have.status(200);
+                const { name, price, quantity, isListed } = res.body;
+                chai.assert.equal(name, u_name);
+                chai.assert.equal(price, u_price);
+                chai.assert.equal(quantity, u_quantity);
+                chai.assert.equal(isListed, u_isListed);
+                done();
+              });
+          })
+          .timeout(2000);
       });
     });
   });
