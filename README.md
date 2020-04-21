@@ -4,7 +4,7 @@
 
 ## Introduction
 
-An up-to-date 2020 example of how you can use Mocha and Chai to perform API testing for a Node-ExpressJS-Mongoose app. You will be able to test your code locally with just one command: `npm test`, and also automatically using Github Action. 
+An up-to-date 2020 example of how you can use Mocha and Chai to perform API testing for a Node-ExpressJS-Mongoose app. You will be able to test your code locally and also automatically using Github Action. 
 
 ## Project
 
