@@ -8,13 +8,13 @@ In this project:
 
 - `test/productRoutes.test.js` contains unit and integration tests for `routes/productRoutes.js`.
 - `routes/productRoutes.js` contains routes which interact with `services/ProductService.js`.
-- `services/ProductService.js` contains controller methods which interact with `models/Product.js`.
+- `services/ProductService.js` contains service methods which interact with `models/Product.js`.
 
 Test cases:
 
 - Unit test cases are written for all routes implemented in `productRoutes.js`.
-    - For unit test cases written for `GET`, `PUT` and `DELETE` which require having an existing Product in the Product collection, the test case directly saves a new Product to the Product Mongoose model before testing.
-- Integration test cases which test multiple routes together are also written.
+    - For unit test cases for `GET`, `PUT` and `DELETE` which require having an existing product in the collection, the product is saved directly via the Product Mongoose model.
+- Integration test cases which test pairs of routes together are also written (e.g. `GET` and `POST`).
 
 ### Test cases
 

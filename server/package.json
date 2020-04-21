@@ -1,6 +1,6 @@
 {
   "name": "mochai",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "An up-to-date 2020 example of how you can use Mocha and Chai to perform API testing for a Node-ExpressJS-Mongoose app.",
   "main": "index.js",
   "keywords": [
@@ -29,10 +29,20 @@
     "chai-http": "^4.3.0",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
-    "mongoose": "^5.9.7"
+    "mongoose": "^5.9.10"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-chai-friendly": "^0.5.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-mocha": "^6.3.0",
+    "eslint-plugin-mongodb": "^1.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^4.0.1",
     "mocha": "^7.1.1"
   }
 }
