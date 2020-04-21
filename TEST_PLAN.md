@@ -13,7 +13,7 @@ In this project:
 Test cases:
 
 - Unit test cases are written for all routes implemented in `productRoutes.js`.
-    - For unit test cases for `GET`, `PUT` and `DELETE` which require having an existing Product in the datanase, a Product is saved directly via the Product Mongoose model.
+    - For unit test cases for `GET`, `PUT` and `DELETE` which require having an existing Product in the collection, the product is saved directly via the Product Mongoose model.
 - Integration test cases which test pairs of routes together are also written (e.g. `GET` and `POST`).
 
 ### Test cases

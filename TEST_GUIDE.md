@@ -8,7 +8,7 @@ To deploy this project locally for development purposes, follow the steps below.
 
 To begin, first install and set up the following.
 
-1. [Install MongoDB locally](https://digipie.github.io/digidocs/full-stack/mongodb/local-setup/), take note of your `mongoURI`. Alternatively, you can use [mLab](https://mlab.com/) instead.
+1. [Install MongoDB locally](https://www.evantay.com/docs/full-stack/mongodb/local-setup/), take note of your `mongoURI`. Alternatively, you can use [mLab](https://mlab.com/) instead.
 2. [Install NodeJS](https://nodejs.org/en/).
 3. Clone this repository: `git clone https://github.com/DigiPie/mocha-chai-mongoose.git`.
 
@@ -27,7 +27,6 @@ Finally, you can execute the Mocha test suite files under the `server/test/` dir
 
 1. Check that you are in the `server/` sub-directory.
 2. Run the tests: `npm test`.
-    - Check out the `scripts` section in `package.json` for more information.
 4. To exit testing, press `CTRL + C`.
 
 ## Automated testing via Github action
