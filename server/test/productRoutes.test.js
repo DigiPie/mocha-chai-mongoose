@@ -1,23 +1,22 @@
 process.env.NODE_ENV = "test";
 
-const _ = require("lodash");
+const { find } = require("lodash");
 
 const mongoose = require("mongoose");
 require("../models/Product");
 const Product = mongoose.model("products");
 
 const chai = require("chai");
-const { assert, expect } = chai;
 const { should } = chai.should();
-
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
-
 const chaiHttp = require("chai-http");
+chai.use(chaiHttp);
 
 const app = require("../index");
 
-chai.use(chaiHttp);
+const timeoutDuration = 3000;
+
 describe("products", () => {
   // Empty database before all test cases are executed.
   before((done) => {
@@ -55,7 +54,7 @@ describe("products", () => {
             res.body.length.should.be.eql(0);
             done();
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
       });
     });
 
@@ -90,7 +89,7 @@ describe("products", () => {
               chai.assert.equal(price, p_price);
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -129,7 +128,7 @@ describe("products", () => {
           chai.assert.equal(isListed, p_isListed);
           done();
         })
-        .timeout(2000);
+        .timeout(timeoutDuration);
     });
 
     /**
@@ -155,7 +154,7 @@ describe("products", () => {
           chai.assert.equal(price, p_price);
           done();
         })
-        .timeout(2000);
+        .timeout(timeoutDuration);
     });
 
     /**
@@ -172,7 +171,7 @@ describe("products", () => {
           chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
-        .timeout(2000);
+        .timeout(timeoutDuration);
     });
 
     /**
@@ -194,7 +193,7 @@ describe("products", () => {
           chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
-        .timeout(2000);
+        .timeout(timeoutDuration);
     });
 
     /**
@@ -216,7 +215,7 @@ describe("products", () => {
           chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
-        .timeout(2000);
+        .timeout(timeoutDuration);
     });
   });
 
@@ -276,7 +275,7 @@ describe("products", () => {
               chai.assert.equal(isListed, u_isListed);
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -328,7 +327,7 @@ describe("products", () => {
               chai.assert.equal(isListed, p_isListed);
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -377,7 +376,7 @@ describe("products", () => {
               chai.assert.equal(isListed, p_isListed);
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -436,7 +435,7 @@ describe("products", () => {
               chai.assert.isUndefined(age); // Invalid property should not be added to product
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -473,7 +472,7 @@ describe("products", () => {
               chai.assert.equal(res.body.name, "ValidationError");
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -508,7 +507,7 @@ describe("products", () => {
 
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -560,7 +559,7 @@ describe("products", () => {
 
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -608,7 +607,7 @@ describe("products", () => {
 
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -653,7 +652,7 @@ describe("products", () => {
 
               done();
             })
-            .timeout(2000);
+            .timeout(timeoutDuration);
         });
       });
     });
@@ -694,7 +693,7 @@ describe("products", () => {
             chai.assert.equal(quantity, p_quantity);
             chai.assert.equal(isListed, p_isListed);
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
 
         chai
           .request(app)
@@ -710,7 +709,7 @@ describe("products", () => {
             chai.assert.equal(isListed, p_isListed);
             done();
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
       });
     });
 
@@ -744,7 +743,7 @@ describe("products", () => {
             chai.assert.equal(quantity, p_quantity);
             chai.assert.equal(isListed, p_isListed);
           })
-          .timeout(500);
+          .timeout(timeoutDuration);
 
         // Add 2nd product
         const p_name_2 = "Banana";
@@ -763,7 +762,7 @@ describe("products", () => {
             chai.assert.equal(name, p_name_2);
             chai.assert.equal(price, p_price_2);
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
 
         // GET the 2 added products
         chai
@@ -774,20 +773,20 @@ describe("products", () => {
             res.body.should.be.a("array");
             res.body.length.should.be.eql(2);
 
-            const product_1 = _.find(res.body, ["name", p_name]);
+            const product_1 = find(res.body, ["name", p_name]);
             const { name, price, quantity, isListed } = product_1;
             chai.assert.equal(name, p_name);
             chai.assert.equal(price, p_price);
             chai.assert.equal(quantity, p_quantity);
             chai.assert.equal(isListed, p_isListed);
 
-            const product_2 = _.find(res.body, ["name", p_name_2]);
+            const product_2 = find(res.body, ["name", p_name_2]);
             const { name: name_2, price: price_2 } = product_2;
             chai.assert.equal(name_2, p_name_2);
             chai.assert.equal(price_2, p_price_2);
             done();
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
       });
     });
   });
@@ -841,7 +840,7 @@ describe("products", () => {
                 done();
               });
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
       });
     });
 
@@ -875,7 +874,7 @@ describe("products", () => {
             chai.assert.equal(quantity, p_quantity);
             chai.assert.equal(isListed, p_isListed);
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
 
         // Add 2nd product
         const p_name_2 = "Banana";
@@ -915,7 +914,7 @@ describe("products", () => {
                 done();
               });
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
       });
     });
   });
@@ -981,7 +980,7 @@ describe("products", () => {
                 done();
               });
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
       });
     });
 
@@ -1015,7 +1014,7 @@ describe("products", () => {
             chai.assert.equal(quantity, p_quantity);
             chai.assert.equal(isListed, p_isListed);
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
 
         // Add 2nd product
         const p_name_2 = "Banana";
@@ -1066,7 +1065,7 @@ describe("products", () => {
                 done();
               });
           })
-          .timeout(2000);
+          .timeout(timeoutDuration);
       });
     });
   });
