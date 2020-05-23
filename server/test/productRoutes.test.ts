@@ -1,3 +1,5 @@
+export {};
+
 process.env.NODE_ENV = "test";
 
 const { find } = require("lodash");
