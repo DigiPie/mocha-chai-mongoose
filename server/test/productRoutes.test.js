@@ -3,7 +3,7 @@ process.env.NODE_ENV = "test";
 const { find } = require("lodash");
 
 const mongoose = require("mongoose");
-require("../models/Product");
+require("../src/models/Product");
 const Product = mongoose.model("products");
 
 const chai = require("chai");
@@ -13,7 +13,7 @@ chai.use(chaiAsPromised);
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 
-const app = require("../index");
+const app = require("../src/index");
 
 const timeoutDuration = 3000;
 
