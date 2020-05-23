@@ -8,10 +8,12 @@ To deploy this project locally for development purposes, follow the steps below.
 
 To begin, first install and set up the following.
 
-1. [Install MongoDB locally](https://www.evantay.com/docs/full-stack/mongodb/local-setup/), take note of your `mongoURI`. Alternatively, you can use [mLab](https://mlab.com/) instead.
-2. [Install NodeJS](https://nodejs.org/en/).
-3. Clone this repository: `git clone https://github.com/DigiPie/mocha-chai-mongoose.git`.
-
+1. [Install NodeJS](https://nodejs.org/en/).
+2. Set up a MongoDB instance for testing. There are three ways to go about it; choose one:
+    - Run `docker-compose up -d` in the `server/` directory to start a MongoDB [Docker](https://docs.docker.com/get-docker/) container
+    - [Install MongoDB locally](https://www.evantay.com/docs/full-stack/mongodb/local-setup/)
+    - Sign up for a [mLab](https://mlab.com/) account and launch an online MongoDB instance
+3. Take note of your `mongoURI`.
 ### Project setup
 
 Next, set up the NodeJS application with the following steps.
