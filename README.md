@@ -30,7 +30,7 @@ View the [Test Plan](TEST_PLAN.md) for more information.
 - 16 unit test cases testing the API routes individually
 - 6 integration test cases testing route pairs (e.g. `GET` and `PUT`)
 
-**Current release:** [`v0.1.0`](https://github.com/DigiPie/mocha-chai-mongoose/releases)
+**Current release:** [`v0.1.1`](https://github.com/DigiPie/mocha-chai-mongoose/releases)
 
 This project will not be frequently worked on beyond [`v0.1.0`](https://github.com/DigiPie/mocha-chai-mongoose/releases). More routes and test cases may be added in future but there are no definite plans currently.
 
