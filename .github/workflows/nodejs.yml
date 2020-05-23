@@ -24,8 +24,8 @@ jobs:
     - name: Installing npm packages
       run: npm install
       working-directory: ${{ matrix.work-dir }}
-    - name: Moving config/prod.js to config/dev.js
-      run: mv config/prod.js config/dev.js
+    - name: Moving src/config/prod.js to src/config/dev.js
+      run: mv src/config/prod.js src/config/dev.js
       working-directory: ${{ matrix.work-dir }}
     - name: Running `npm test`
       run: npm test
