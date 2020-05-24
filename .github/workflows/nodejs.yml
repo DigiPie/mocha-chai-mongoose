@@ -24,8 +24,8 @@ jobs:
     - name: Install npm packages
       run: npm install
       working-directory: ${{ matrix.work-dir }}
-    - name: Move src/config/prod.js to src/config/dev.js
-      run: mv src/config/prod.js src/config/dev.js
+    - name: Move src/config/prod.ts to src/config/dev.ts
+      run: mv src/config/prod.ts src/config/dev.ts
       working-directory: ${{ matrix.work-dir }}
     - name: Run `npm run compile` to compile Typescript into Javascript
       run: npm run compile
