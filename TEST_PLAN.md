@@ -6,13 +6,13 @@ This test plan details how the `mocha-chai-mongoose` backend server API is teste
 
 In this project:
 
-- `test/productRoutes.test.js` contains unit and integration tests for `routes/productRoutes.js`.
-- `routes/productRoutes.js` contains routes which interact with `services/ProductService.js`.
-- `services/ProductService.js` contains service methods which interact with `models/Product.js`.
+- `test/productRoutes.test.ts` contains unit and integration tests for `src/routes/productRoutes.ts`.
+- `src/routes/productRoutes.ts` contains routes which interact with `src/services/ProductService.ts`.
+- `src/services/ProductService.ts` contains service methods which interact with `src/models/Product.ts`.
 
 Test cases:
 
-- Unit test cases are written for all routes implemented in `productRoutes.js`.
+- Unit test cases are written for all routes implemented in `productRoutes.ts`.
     - For unit test cases for `GET`, `PUT` and `DELETE` which require having an existing product in the collection, the product is saved directly via the Product Mongoose model.
 - Integration test cases which test pairs of routes together are also written (e.g. `GET` and `POST`).
 

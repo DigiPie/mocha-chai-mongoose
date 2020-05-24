@@ -16,15 +16,15 @@ Read the [Test Guide](TEST_GUIDE.md) for instructions on how to perform local an
 
 In this project:
 
-- `test/productRoutes.test.js` contains unit and integration tests for `routes/productRoutes.js`.
-- `routes/productRoutes.js` contains routes which interact with `services/ProductService.js`.
-- `services/ProductService.js` contains service methods which interact with `models/Product.js`.
+- `test/productRoutes.test.ts` contains unit and integration tests for `src/routes/productRoutes.ts`.
+- `src/routes/productRoutes.ts` contains routes which interact with `src/services/ProductService.ts`.
+- `src/services/ProductService.ts` contains service methods which interact with `src/models/Product.ts`.
 
 View the [Test Plan](TEST_PLAN.md) for more information.
 
 ### Releases
 
-**Stable release:** [`v0.1.0`](https://github.com/DigiPie/mocha-chai-mongoose/releases)
+**Stable release:** [`v0.1.1`](https://github.com/DigiPie/mocha-chai-mongoose/releases)
 
 - Implementation of `GET`, `POST`, `PUT` and `DELETE` routes
 - 16 unit test cases testing the API routes individually
