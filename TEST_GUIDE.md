@@ -25,7 +25,7 @@ Next, set up the NodeJS application with the following steps.
 4. Rename `example_dev.ts` as `dev.ts`.
 5. Run `tsc` to compile the Typescript source code in `server/src` into Javascript code stored at `server/build`.
  
-**Note:** You have to run `tsc` after each change made to the source code in `src`. `npm start` and `npm test` runs the compiled code in `build`.
+**Note:** You have to run `tsc` after each change made to the source code in `src`. The `npm start` and `npm test` scripts runs the compiled code in `build`, not the code in `src.
 
 ### Testing
 
