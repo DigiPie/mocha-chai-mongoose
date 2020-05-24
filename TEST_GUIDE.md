@@ -21,8 +21,11 @@ Next, set up the NodeJS application with the following steps.
 
 1. Open the `server/` sub-directory within the `mocha-chai-mongoose` folder: `cd server`.
 2. Install the required packages (which are specified in `package.json`): `npm install`.
-3. Open `config/example_dev.js` and fill in the `mongoURI` to your local MongoDB instance.
-4. Rename `example_dev.js` as `dev.js`.
+3. Open `server/src/config/example_dev.ts` and fill in the `mongoURI` to your local MongoDB instance.
+4. Rename `example_dev.ts` as `dev.ts`.
+5. Run `tsc` to compile the Typescript source code in `server/src` into Javascript code stored at `server/build`.
+ 
+**Note:** You have to run `tsc` after each change made to the source code in `src`. `npm start` and `npm test` runs the compiled code in `build`.
 
 ### Testing
 
