@@ -11,6 +11,7 @@
     "test"
   ],
   "scripts": {
+    "compile": "npx tsc",
     "start": "node build/src/index.js",
     "test": "mocha build/test/**/* --exit"
   },

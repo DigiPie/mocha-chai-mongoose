@@ -14,6 +14,7 @@ To begin, first install and set up the following.
     - [Install MongoDB locally](https://www.evantay.com/docs/full-stack/mongodb/local-setup/)
     - Sign up for a [mLab](https://mlab.com/) account and launch an online MongoDB instance
 3. Take note of your `mongoURI`.
+
 ### Project setup
 
 Next, set up the NodeJS application with the following steps.
