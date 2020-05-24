@@ -8,9 +8,12 @@ To deploy this project locally for development purposes, follow the steps below.
 
 To begin, first install and set up the following.
 
-1. [Install MongoDB locally](https://www.evantay.com/docs/full-stack/mongodb/local-setup/), take note of your `mongoURI`. Alternatively, you can use [mLab](https://mlab.com/) instead.
-2. [Install NodeJS](https://nodejs.org/en/).
-3. Clone this repository: `git clone https://github.com/DigiPie/mocha-chai-mongoose.git`.
+1. [Install NodeJS](https://nodejs.org/en/).
+2. Set up a MongoDB instance for testing. There are three ways to go about it; choose one:
+    - Run `docker-compose up -d` in the `server/` directory to start a MongoDB [Docker](https://docs.docker.com/get-docker/) container
+    - [Install MongoDB locally](https://www.evantay.com/docs/full-stack/mongodb/local-setup/)
+    - Sign up for a [mLab](https://mlab.com/) account and launch an online MongoDB instance
+3. Take note of your `mongoURI`.
 
 ### Project setup
 
@@ -18,8 +21,11 @@ Next, set up the NodeJS application with the following steps.
 
 1. Open the `server/` sub-directory within the `mocha-chai-mongoose` folder: `cd server`.
 2. Install the required packages (which are specified in `package.json`): `npm install`.
-3. Open `config/example_dev.js` and fill in the `mongoURI` to your local MongoDB instance.
-4. Rename `example_dev.js` as `dev.js`.
+3. Open `server/src/config/example_dev.ts` and fill in the `mongoURI` to your local MongoDB instance.
+4. Rename `example_dev.ts` as `dev.ts`.
+5. Run `tsc` to compile the Typescript source code in `server/src` into Javascript code stored at `server/build`.
+ 
+**Note:** You have to run `tsc` after each change made to the source code in `src`. The `npm start` and `npm test` scripts runs the compiled code in `build`, not the code in `src.
 
 ### Testing
 

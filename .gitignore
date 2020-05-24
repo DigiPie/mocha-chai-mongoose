@@ -105,3 +105,6 @@ dist
 
 # Hide development keys
 dev.js
+
+# Hide development files
+build

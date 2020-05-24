@@ -21,13 +21,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Create mongoDB Docker container for API testing
       uses: DigiPie/mongo-action@v1.0.0
-    - name: Installing npm packages
+    - name: Install npm packages
       run: npm install
       working-directory: ${{ matrix.work-dir }}
-    - name: Moving config/prod.js to config/dev.js
-      run: mv config/prod.js config/dev.js
+    - name: Move src/config/prod.ts to src/config/dev.ts
+      run: mv src/config/prod.ts src/config/dev.ts
       working-directory: ${{ matrix.work-dir }}
-    - name: Running `npm test`
+    - name: Run `npm run compile` to compile Typescript into Javascript
+      run: npm run compile
+      working-directory: ${{ matrix.work-dir }}
+    - name: Run `npm test`
       run: npm test
       working-directory: ${{ matrix.work-dir }}
       env:

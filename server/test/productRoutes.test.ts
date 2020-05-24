@@ -1,9 +1,11 @@
+export {};
+
 process.env.NODE_ENV = "test";
 
 const { find } = require("lodash");
 
 const mongoose = require("mongoose");
-require("../models/Product");
+require("../src/models/Product");
 const Product = mongoose.model("products");
 
 const chai = require("chai");
@@ -13,21 +15,21 @@ chai.use(chaiAsPromised);
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 
-const app = require("../index");
+const app = require("../src/index");
 
 const timeoutDuration = 3000;
 
 describe("products", () => {
   // Empty database before all test cases are executed.
   before((done) => {
-    Product.deleteMany({}, (err) => {
+    Product.deleteMany({}, (err: any) => {
       done();
     });
   });
 
   // Empty database after all test cases are executed.
   after((done) => {
-    Product.deleteMany({}, (err) => {
+    Product.deleteMany({}, (err: any) => {
       done();
     });
   });
@@ -44,11 +46,11 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully GET an empty array of 0 Products.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         chai
           .request(app)
           .get("/api/products")
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             res.body.should.be.a("array");
             res.body.length.should.be.eql(0);
@@ -64,7 +66,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully GET an empty array of 1 product.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const date = Date.now();
@@ -76,11 +78,11 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           chai
             .request(app)
             .get("/api/products")
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(200);
               res.body.should.be.a("array");
               res.body.length.should.be.eql(1);
@@ -119,7 +121,7 @@ describe("products", () => {
           quantity: p_quantity,
           isListed: p_isListed,
         })
-        .end((err, res) => {
+        .end((err: any, res: any) => {
           res.should.have.status(200);
           const { name, price, quantity, isListed } = res.body;
           chai.assert.equal(name, p_name);
@@ -147,7 +149,7 @@ describe("products", () => {
           name: p_name,
           price: p_price,
         })
-        .end((err, res) => {
+        .end((err: any, res: any) => {
           res.should.have.status(200);
           const { name, price } = res.body;
           chai.assert.equal(name, p_name);
@@ -166,7 +168,7 @@ describe("products", () => {
       chai
         .request(app)
         .post("/api/products")
-        .end((err, res) => {
+        .end((err: any, res: any) => {
           res.should.have.status(400);
           chai.assert.equal(res.body.name, "ValidationError");
           done();
@@ -188,7 +190,7 @@ describe("products", () => {
         .send({
           price: p_price,
         })
-        .end((err, res) => {
+        .end((err: any, res: any) => {
           res.should.have.status(400);
           chai.assert.equal(res.body.name, "ValidationError");
           done();
@@ -210,7 +212,7 @@ describe("products", () => {
         .send({
           name: p_name,
         })
-        .end((err, res) => {
+        .end((err: any, res: any) => {
           res.should.have.status(400);
           chai.assert.equal(res.body.name, "ValidationError");
           done();
@@ -229,7 +231,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully PUT 1 Product with all parameters specified.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const p_quantity = 1;
@@ -245,7 +247,7 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           // Retrieve the saved document's Mongoose ID
           const { _id } = product;
           chai.assert.isNotNull(_id);
@@ -266,7 +268,7 @@ describe("products", () => {
               quantity: u_quantity,
               isListed: u_isListed,
             })
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(200);
               const { name, price, quantity, isListed } = res.body;
               chai.assert.equal(name, u_name);
@@ -286,7 +288,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully PUT 1 Product with only one parameter specified besides '_id'.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const p_quantity = 1;
@@ -302,7 +304,7 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           // Retrieve the saved document's Mongoose ID
           const { _id } = product;
           chai.assert.isNotNull(_id);
@@ -317,7 +319,7 @@ describe("products", () => {
               _id: _id,
               name: u_name,
             })
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(200);
               const { name, price, quantity, isListed } = res.body;
               // Only name was updated, other properties should still be the same as previously
@@ -339,7 +341,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully PUT 1 Product with no parameters specified.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const p_quantity = 0;
@@ -355,7 +357,7 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           // Retrieve the saved document's Mongoose ID
           const { _id } = product;
           chai.assert.isNotNull(_id);
@@ -366,7 +368,7 @@ describe("products", () => {
             .send({
               _id: _id,
             })
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(200);
               const { name, price, quantity, isListed } = res.body;
               // No properties were specified for update, so all properties should be unchanged
@@ -388,7 +390,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully PUT 1 Product with valid and non-valid parameters specified.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Carrot Cake";
         const p_price = 1.0;
         const p_quantity = 50;
@@ -404,7 +406,7 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           // Retrieve the saved document's Mongoose ID
           const { _id } = product;
           chai.assert.isNotNull(_id);
@@ -423,7 +425,7 @@ describe("products", () => {
               isListed: u_isListed,
               age: i_age, // Invalid property
             })
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(200);
               const { name, price, quantity, isListed, age } = res.body;
               // Only name and isListed were updated
@@ -447,7 +449,7 @@ describe("products", () => {
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to PUT 1 Product because '_id' is missing.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const p_quantity = 0;
@@ -463,11 +465,11 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           chai
             .request(app)
             .put("/api/products")
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(400);
               chai.assert.equal(res.body.name, "ValidationError");
               done();
@@ -484,7 +486,7 @@ describe("products", () => {
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to PUT 1 Product because '_id' is malformed.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const date = Date.now();
@@ -496,12 +498,12 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           chai
             .request(app)
             .put("/api/products")
             .send({ _id: "Banana" })
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(400);
               chai.assert.equal(res.body.name, "CastError");
 
@@ -523,7 +525,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully DELETE 1 Product.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const date = Date.now();
@@ -535,13 +537,13 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           // Retrieve the saved document's Mongoose ID
           const { _id } = product;
           chai.assert.isNotNull(_id);
 
           // There should be 1 product in the Collection
-          Product.countDocuments({}, (err, count) => {
+          Product.countDocuments({}, (err: any, count: number) => {
             chai.assert.equal(count, 1);
           });
 
@@ -549,11 +551,11 @@ describe("products", () => {
             .request(app)
             .delete("/api/products")
             .send({ _id: _id })
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(200);
 
               // There should be 0 Products in the Collection after deletion
-              Product.countDocuments({}, (err, count) => {
+              Product.countDocuments({}, (err: any, count: number) => {
                 chai.assert.equal(count, 0);
               });
 
@@ -571,7 +573,7 @@ describe("products", () => {
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to DELETE 1 Product because '_id' is missing.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const date = Date.now();
@@ -583,25 +585,25 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           // Retrieve the saved document's Mongoose ID
           const { _id } = product;
           chai.assert.isNotNull(_id);
 
           // There should be 1 product in the Collection
-          Product.countDocuments({}, (err, count) => {
+          Product.countDocuments({}, (err: any, count: number) => {
             chai.assert.equal(count, 1);
           });
 
           chai
             .request(app)
             .delete("/api/products")
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(400);
               chai.assert.equal(res.body.name, "ValidationError");
 
               // There should still be 1 product in the Collection
-              Product.countDocuments({}, (err, count) => {
+              Product.countDocuments({}, (err: any, count: number) => {
                 chai.assert.equal(count, 1);
               });
 
@@ -619,7 +621,7 @@ describe("products", () => {
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to DELETE 1 Product because '_id' is malformed.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const date = Date.now();
@@ -631,9 +633,9 @@ describe("products", () => {
           dateUpdated: date,
         });
 
-        product.save({}, (err) => {
+        product.save({}, (err: any) => {
           // There should be 1 product in the Collection
-          Product.countDocuments({}, (err, count) => {
+          Product.countDocuments({}, (err: any, count: number) => {
             chai.assert.equal(count, 1);
           });
 
@@ -641,12 +643,12 @@ describe("products", () => {
             .request(app)
             .delete("/api/products")
             .send({ _id: "Banana" })
-            .end((err, res) => {
+            .end((err: any, res: any) => {
               res.should.have.status(400);
               chai.assert.equal(res.body.name, "CastError");
 
               // There should still be 1 product in the Collection
-              Product.countDocuments({}, (err, count) => {
+              Product.countDocuments({}, (err: any, count: number) => {
                 chai.assert.equal(count, 1);
               });
 
@@ -670,7 +672,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully GET an array of 1 Product added by POST.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         const p_name = "Apple";
         const p_price = 1.0;
         const p_quantity = 1;
@@ -685,7 +687,7 @@ describe("products", () => {
             quantity: p_quantity,
             isListed: p_isListed,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { name, price, quantity, isListed } = res.body;
             chai.assert.equal(name, p_name);
@@ -698,7 +700,7 @@ describe("products", () => {
         chai
           .request(app)
           .get("/api/products")
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             res.body.should.be.a("array");
             res.body.length.should.be.eql(1);
@@ -719,7 +721,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully GET an array of 2 Products added by POST.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         // Add 1st product
         const p_name = "Apple";
         const p_price = 1.0;
@@ -735,7 +737,7 @@ describe("products", () => {
             quantity: p_quantity,
             isListed: p_isListed,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { name, price, quantity, isListed } = res.body;
             chai.assert.equal(name, p_name);
@@ -756,7 +758,7 @@ describe("products", () => {
             name: p_name_2,
             price: p_price_2,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { name, price } = res.body;
             chai.assert.equal(name, p_name_2);
@@ -768,7 +770,7 @@ describe("products", () => {
         chai
           .request(app)
           .get("/api/products")
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             res.body.should.be.a("array");
             res.body.length.should.be.eql(2);
@@ -801,7 +803,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully POST 1 Product then DELETE 1 Product.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         // Add the product
         const p_name = "Apple";
         const p_price = 1.0;
@@ -817,7 +819,7 @@ describe("products", () => {
             quantity: p_quantity,
             isListed: p_isListed,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { _id, name, price, quantity, isListed } = res.body;
             chai.assert.equal(name, p_name);
@@ -829,11 +831,11 @@ describe("products", () => {
               .request(app)
               .delete("/api/products")
               .send({ _id })
-              .end((err, res) => {
+              .end((err: any, res: any) => {
                 res.should.have.status(200);
 
                 // There should be 0 Products in the Collection after deletion
-                Product.countDocuments({}, (err, count) => {
+                Product.countDocuments({}, (err: any, count: number) => {
                   chai.assert.equal(count, 0);
                 });
 
@@ -850,7 +852,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully POST 2 Products then DELETE 1 Product.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         // Add 1st product
         const p_name = "Apple";
         const p_price = 1.0;
@@ -866,7 +868,7 @@ describe("products", () => {
             quantity: p_quantity,
             isListed: p_isListed,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { name, price, quantity, isListed } = res.body;
             chai.assert.equal(name, p_name);
@@ -887,14 +889,14 @@ describe("products", () => {
             name: p_name_2,
             price: p_price_2,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { _id, name, price } = res.body;
             chai.assert.equal(name, p_name_2);
             chai.assert.equal(price, p_price_2);
 
             // There should be 2 Products
-            Product.countDocuments({}, (err, count) => {
+            Product.countDocuments({}, (err: any, count: number) => {
               chai.assert.equal(count, 2);
             });
 
@@ -903,11 +905,11 @@ describe("products", () => {
               .request(app)
               .delete("/api/products")
               .send({ _id })
-              .end((err, res) => {
+              .end((err: any, res: any) => {
                 res.should.have.status(200);
 
                 // There should be 1 Product left
-                Product.countDocuments({}, (err, count) => {
+                Product.countDocuments({}, (err: any, count: number) => {
                   chai.assert.equal(count, 1);
                 });
 
@@ -929,7 +931,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully POST 1 Product then PUT 1 Product.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         // Add the product
         const p_name = "Apple";
         const p_price = 1.0;
@@ -945,7 +947,7 @@ describe("products", () => {
             quantity: p_quantity,
             isListed: p_isListed,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { _id, name, price, quantity, isListed } = res.body;
             chai.assert.equal(name, p_name);
@@ -970,7 +972,7 @@ describe("products", () => {
                 quantity: u_quantity,
                 isListed: u_isListed,
               })
-              .end((err, res) => {
+              .end((err: any, res: any) => {
                 res.should.have.status(200);
                 const { name, price, quantity, isListed } = res.body;
                 chai.assert.equal(name, u_name);
@@ -990,7 +992,7 @@ describe("products", () => {
      * Expected to return a 200 OK status code.
      */
     it("Successfully POST 2 Products then PUT 1 Product.", (done) => {
-      Product.deleteMany({}, (err) => {
+      Product.deleteMany({}, (err: any) => {
         // Add 1st product
         const p_name = "Apple";
         const p_price = 1.0;
@@ -1006,7 +1008,7 @@ describe("products", () => {
             quantity: p_quantity,
             isListed: p_isListed,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { name, price, quantity, isListed } = res.body;
             chai.assert.equal(name, p_name);
@@ -1027,14 +1029,14 @@ describe("products", () => {
             name: p_name_2,
             price: p_price_2,
           })
-          .end((err, res) => {
+          .end((err: any, res: any) => {
             res.should.have.status(200);
             const { _id, name, price } = res.body;
             chai.assert.equal(name, p_name_2);
             chai.assert.equal(price, p_price_2);
 
             // There should be 2 Products
-            Product.countDocuments({}, (err, count) => {
+            Product.countDocuments({}, (err: any, count: number) => {
               chai.assert.equal(count, 2);
             });
 
@@ -1055,7 +1057,7 @@ describe("products", () => {
                 quantity: u_quantity,
                 isListed: u_isListed,
               })
-              .end((err, res) => {
+              .end((err: any, res: any) => {
                 res.should.have.status(200);
                 const { name, price, quantity, isListed } = res.body;
                 chai.assert.equal(name, u_name);
