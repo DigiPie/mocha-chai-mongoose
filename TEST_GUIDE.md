@@ -11,7 +11,7 @@ To begin, first install and set up the following.
 1. [Install NodeJS](https://nodejs.org/en/).
 2. Set up a MongoDB instance for testing. There are three ways to go about it; choose one:
     - Run `docker-compose up -d` in the `server/` directory to start a MongoDB [Docker](https://docs.docker.com/get-docker/) container
-    - [Install MongoDB locally](https://www.evantay.com/docs/full-stack/mongodb/local-setup/)
+    - [Install MongoDB locally](https://www.evantay.com/docs/mongodb/local-setup/)
     - Sign up for a [mLab](https://mlab.com/) account and launch an online MongoDB instance
 3. Take note of your `mongoURI`.
 
