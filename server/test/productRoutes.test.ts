@@ -161,7 +161,6 @@ describe("products", () => {
 
     /**
      * Tests the POST /api/products route with all product parameters missing.
-     * Expected to return a ValidationError.
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to POST 1 Product because all parameters are missing.", (done) => {
@@ -170,7 +169,6 @@ describe("products", () => {
         .post("/api/products")
         .end((err: any, res: any) => {
           res.should.have.status(400);
-          chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
         .timeout(timeoutDuration);
@@ -178,7 +176,6 @@ describe("products", () => {
 
     /**
      * Tests the POST /api/products route with required parameter 'name' missing.
-     * Expected to return a ValidationError.
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to POST 1 Product because 'name' parameter is missing.", (done) => {
@@ -192,7 +189,6 @@ describe("products", () => {
         })
         .end((err: any, res: any) => {
           res.should.have.status(400);
-          chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
         .timeout(timeoutDuration);
@@ -200,7 +196,6 @@ describe("products", () => {
 
     /**
      * Tests the POST /api/products route with required parameter 'price' missing.
-     * Expected to return a ValidationError.
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to POST 1 Product because 'price' parameter is missing.", (done) => {
@@ -214,7 +209,6 @@ describe("products", () => {
         })
         .end((err: any, res: any) => {
           res.should.have.status(400);
-          chai.assert.equal(res.body.name, "ValidationError");
           done();
         })
         .timeout(timeoutDuration);
@@ -445,7 +439,6 @@ describe("products", () => {
     /**
      * Tests the PUT /api/products route with required parameter '_id' missing.
      * Expected to not update the product added via the Mongoose model directly.
-     * Expected to return a ValidationError.
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to PUT 1 Product because '_id' is missing.", (done) => {
@@ -471,7 +464,6 @@ describe("products", () => {
             .put("/api/products")
             .end((err: any, res: any) => {
               res.should.have.status(400);
-              chai.assert.equal(res.body.name, "ValidationError");
               done();
             })
             .timeout(timeoutDuration);
@@ -482,7 +474,6 @@ describe("products", () => {
     /**
      * Tests the PUT /api/products route with required parameter '_id' being malformed.
      * Expected to not update the product added via the Mongoose model directly.
-     * Expected to return a CastError.
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to PUT 1 Product because '_id' is malformed.", (done) => {
@@ -505,8 +496,6 @@ describe("products", () => {
             .send({ _id: "Banana" })
             .end((err: any, res: any) => {
               res.should.have.status(400);
-              chai.assert.equal(res.body.name, "CastError");
-
               done();
             })
             .timeout(timeoutDuration);
@@ -569,7 +558,6 @@ describe("products", () => {
     /**
      * Tests the DELETE /api/products route with required parameter '_id' missing.
      * Expected to not delete the product added via the Mongoose model directly.
-     * Expected to return a ValidationError.
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to DELETE 1 Product because '_id' is missing.", (done) => {
@@ -600,7 +588,6 @@ describe("products", () => {
             .delete("/api/products")
             .end((err: any, res: any) => {
               res.should.have.status(400);
-              chai.assert.equal(res.body.name, "ValidationError");
 
               // There should still be 1 product in the Collection
               Product.countDocuments({}, (err: any, count: number) => {
@@ -617,7 +604,6 @@ describe("products", () => {
     /**
      * Tests the DELETE /api/products route with required parameter '_id' being malformed.
      * Expected to not delete the product added via the Mongoose model directly.
-     * Expected to return a CastError.
      * Expected to return a 400 Bad Request status code.
      */
     it("Fail to DELETE 1 Product because '_id' is malformed.", (done) => {
@@ -645,7 +631,6 @@ describe("products", () => {
             .send({ _id: "Banana" })
             .end((err: any, res: any) => {
               res.should.have.status(400);
-              chai.assert.equal(res.body.name, "CastError");
 
               // There should still be 1 product in the Collection
               Product.countDocuments({}, (err: any, count: number) => {
