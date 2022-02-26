@@ -23,9 +23,10 @@ Next, set up the NodeJS application with the following steps.
 2. Install the required packages (which are specified in `package.json`): `npm install`.
 3. Open `server/src/config/example_dev.ts` and fill in the `mongoURI` to your local MongoDB instance.
 4. Rename `example_dev.ts` as `dev.ts`.
-5. Run `tsc` to compile the Typescript source code in `server/src` into Javascript code stored at `server/build`.
- 
-**Note:** You have to run `tsc` after each change made to the source code in `src`. The `npm start` and `npm test` scripts runs the compiled code in `build`, not the code in `src.
+5. Run `tsc` or `npm run compile` to compile the Typescript source code in `server/src` into Javascript code stored at `server/build`.
+    - You will need to install the [Typescript compiler](https://code.visualstudio.com/docs/typescript/typescript-compiling#_install-the-typescript-compiler) first: `npm install -g typescript`.
+
+**Note:** You have to run `tsc` or `npm run compile` after each change made to the source code in `src`. The `npm start` and `npm test` scripts runs the compiled code in `build`, not the code in `src.
 
 ### Testing
 
@@ -33,7 +34,8 @@ Finally, you can execute the Mocha test suite files under the `server/test/` dir
 
 1. Check that you are in the `server/` sub-directory.
 2. Run the tests: `npm test`.
-4. To exit testing, press `CTRL + C`.
+    - If you encounter "Uncaught Error: listen EADDRINUSE: address already in use :::5000", specify another port number via the `PORT` environment variable: `PORT=5001 npm test`.
+3. To exit testing, press `CTRL + C`.
 
 ## Automated testing via Github action
 
